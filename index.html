@@ -3,749 +3,298 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Boundless Pursuit — Travel Consulting</title>
-<meta name="description" content="Boundless Pursuit is a luxury travel consulting service crafting bespoke journeys for the discerning traveler. Let us design your next unforgettable adventure.">
-<meta property="og:title" content="Boundless Pursuit — Travel Consulting">
-<meta property="og:description" content="Crafting bespoke journeys for the discerning traveler. Let us design your next unforgettable adventure.">
-<meta property="og:url" content="https://www.theboundlesspursuit.com">
+<title>Plan My Trip — Boundless Pursuit Travel Consulting</title>
+<meta name="description" content="Tell us about your dream journey and we'll craft a bespoke travel experience just for you.">
+<meta property="og:title" content="Plan My Trip — Boundless Pursuit Travel Consulting">
+<meta property="og:description" content="Tell us about your dream journey and we'll craft a bespoke travel experience just for you.">
+<meta property="og:url" content="https://www.theboundlesspursuit.com/HTML-travel-intake-form.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Boundless Pursuit">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Boundless Pursuit — Travel Consulting">
-<meta name="twitter:description" content="Crafting bespoke journeys for the discerning traveler. Let us design your next unforgettable adventure.">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<meta name="twitter:title" content="Plan My Trip — Boundless Pursuit Travel Consulting">
+<meta name="twitter:description" content="Tell us about your dream journey and we'll craft a bespoke travel experience just for you.">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --ink:        #1a1714;
-    --navy:       #1b2a4a;
-    --navy-deep:  #152038;
-    --parchment:  #f2ebe0;
-    --cream:      #f7f2e8;
-    --warm-white: #faf7f1;
-    --sand:       #d4c4a0;
-    --gold:       #c9a84c;
+    --ink: #1a1714;
+    --navy: #1b2a4a;
+    --parchment: #f2ebe0;
+    --cream: #f7f2e8;
+    --sand: #d4c4a0;
+    --gold: #c9a84c;
     --gold-light: #e2c97e;
-    --muted:      #7a7168;
-    --rule:       #ddd5c4;
-    --map-blue:   #6b8fa8;
+    --muted: #7a7168;
+    --rule: #ddd5c4;
+    --map-blue: #6b8fa8;
   }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  html { scroll-behavior: smooth; }
-
   body {
     background-color: var(--cream);
+    background-image:
+      /* Faint world map watermark via SVG continents */
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='800' viewBox='0 0 1200 800'%3E%3Cellipse cx='200' cy='320' rx='180' ry='130' fill='%236b8fa8' opacity='0.07'/%3E%3Cellipse cx='160' cy='480' rx='120' ry='80' fill='%236b8fa8' opacity='0.05'/%3E%3Cellipse cx='500' cy='280' rx='200' ry='100' fill='%236b8fa8' opacity='0.06'/%3E%3Cellipse cx='480' cy='420' rx='80' ry='60' fill='%236b8fa8' opacity='0.04'/%3E%3Cellipse cx='750' cy='260' rx='220' ry='110' fill='%236b8fa8' opacity='0.06'/%3E%3Cellipse cx='850' cy='380' rx='140' ry='100' fill='%236b8fa8' opacity='0.05'/%3E%3Cellipse cx='700' cy='480' rx='60' ry='50' fill='%236b8fa8' opacity='0.04'/%3E%3Cellipse cx='1050' cy='320' rx='100' ry='80' fill='%236b8fa8' opacity='0.05'/%3E%3Cellipse cx='980' cy='450' rx='80' ry='60' fill='%236b8fa8' opacity='0.04'/%3E%3C/svg%3E"),
+      /* Noise/paper texture */
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    background-size: 100% auto, 300px 300px;
+    background-repeat: no-repeat, repeat;
+    background-position: center 200px, 0 0;
     color: var(--navy);
     font-family: 'Jost', sans-serif;
     font-weight: 300;
-    overflow-x: hidden;
-  }
-
-  /* ── NAV ── */
-  nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 200;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 48px;
-    height: 68px;
-    background: rgba(247, 242, 232, 0.92);
-    backdrop-filter: blur(8px);
-    border-bottom: 1px solid var(--rule);
-    transition: background 0.3s;
-  }
-  .nav-brand {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 20px;
-    font-weight: 600;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--navy);
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .nav-brand .bp-mono {
-    width: 34px; height: 34px;
-    border: 1.5px solid var(--gold);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--navy);
-    letter-spacing: -1px;
-    flex-shrink: 0;
-  }
-  .nav-links {
-    display: flex;
-    align-items: center;
-    gap: 36px;
-    list-style: none;
-  }
-  .nav-links a {
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--muted);
-    text-decoration: none;
-    transition: color 0.2s;
-  }
-  .nav-links a:hover { color: var(--navy); }
-  .nav-cta {
-    background: var(--navy) !important;
-    color: var(--parchment) !important;
-    padding: 10px 22px;
-    font-size: 10px !important;
-    letter-spacing: 0.22em !important;
-  }
-  .nav-cta:hover { background: var(--navy-deep) !important; color: var(--parchment) !important; }
-
-  /* hamburger */
-  .nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 4px; }
-  .nav-toggle span {
-    display: block; width: 22px; height: 1.5px;
-    background: var(--navy); margin: 5px 0;
-    transition: all 0.3s;
-  }
-
-  /* ── HERO ── */
-  .hero {
     min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-    padding: 100px 24px 80px;
+    padding: 0;
+  }
+
+  /* Decorative top band */
+  .top-band { display: none; }
+  .gold-band { display: none; }
+
+  /* ── HEADER: Business Card Replica ── */
+  .header {
     background-color: #f0e9d8;
     background-image:
+      /* Watercolor continent blobs — left Americas */
       radial-gradient(ellipse 220px 160px at 12% 55%, rgba(107,143,168,0.28) 0%, transparent 70%),
       radial-gradient(ellipse 120px 90px at 8% 78%, rgba(107,143,168,0.18) 0%, transparent 70%),
       radial-gradient(ellipse 80px 60px at 18% 85%, rgba(107,143,168,0.12) 0%, transparent 70%),
+      /* bottom-left dark ink blot */
       radial-gradient(ellipse 160px 120px at 2% 98%, rgba(27,42,74,0.22) 0%, transparent 65%),
+      /* Europe/Africa */
       radial-gradient(ellipse 160px 100px at 42% 40%, rgba(107,143,168,0.20) 0%, transparent 70%),
       radial-gradient(ellipse 90px 120px at 44% 62%, rgba(107,143,168,0.15) 0%, transparent 70%),
+      /* Asia */
       radial-gradient(ellipse 240px 120px at 72% 38%, rgba(107,143,168,0.22) 0%, transparent 70%),
       radial-gradient(ellipse 100px 80px at 78% 58%, rgba(107,143,168,0.16) 0%, transparent 70%),
+      /* Australia */
       radial-gradient(ellipse 70px 50px at 88% 68%, rgba(107,143,168,0.14) 0%, transparent 70%),
+      /* warm parchment base */
       linear-gradient(160deg, #ede4ce 0%, #f2ead8 40%, #ede0c4 100%);
-  }
-  .hero::after {
-    content: '';
-    position: absolute;
-    bottom: 0; left: 0; right: 0;
-    height: 120px;
-    background: linear-gradient(to bottom, transparent, var(--cream));
-    pointer-events: none;
+    padding: 0;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 3px solid var(--gold);
   }
 
-  /* SVG hero layer */
-  .hero-svg {
+  /* SVG canvas for compass, monogram, plane trail, stamp */
+  .header-svg-layer {
     position: absolute;
     inset: 0;
     width: 100%; height: 100%;
     pointer-events: none;
   }
 
-  .hero-content {
+  /* Header content sits above SVG */
+  .header-content {
     position: relative;
     z-index: 2;
-    max-width: 720px;
+    padding: 44px 40px 40px;
   }
-  .hero-eyebrow {
-    font-size: 10px;
-    font-weight: 500;
-    letter-spacing: 0.32em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 28px;
-    opacity: 0;
-    animation: fadeUp 0.8s 0.2s forwards;
-  }
-  .hero-brand {
+
+  .header-eyebrow { display: none; }
+
+  /* BOUNDLESS PURSUIT large serif title */
+  .header-brand {
     font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(48px, 9vw, 88px);
+    font-size: clamp(32px, 7vw, 64px);
     font-weight: 600;
     color: var(--navy);
-    letter-spacing: 0.1em;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
     line-height: 1;
-    text-shadow: 2px 3px 16px rgba(27,42,74,0.12);
-    opacity: 0;
-    animation: fadeUp 0.8s 0.35s forwards;
+    margin-top: 16px;
+    text-shadow: 1px 2px 8px rgba(27,42,74,0.10);
   }
-  .hero-rule-row {
+
+  /* gold rule + star below brand */
+  .header-brand-rule {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 14px;
-    margin: 20px auto 22px;
-    max-width: 480px;
-    opacity: 0;
-    animation: fadeUp 0.8s 0.5s forwards;
+    gap: 12px;
+    margin: 12px auto 10px;
+    max-width: 500px;
   }
-  .hero-rule-row .line {
-    flex: 1; height: 1px;
+  .header-brand-rule span {
+    flex: 1;
+    height: 1px;
     background: linear-gradient(90deg, transparent, var(--gold));
   }
-  .hero-rule-row .line:last-child {
+  .header-brand-rule span:last-child {
     background: linear-gradient(90deg, var(--gold), transparent);
   }
-  .hero-tagline {
-    font-size: clamp(13px, 2vw, 16px);
-    font-weight: 300;
-    color: var(--navy);
-    letter-spacing: 0.06em;
-    line-height: 1.8;
-    max-width: 540px;
-    margin: 0 auto 40px;
-    opacity: 0;
-    animation: fadeUp 0.8s 0.65s forwards;
-  }
-  .hero-actions {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
-    flex-wrap: wrap;
-    opacity: 0;
-    animation: fadeUp 0.8s 0.8s forwards;
-  }
-  .btn-primary {
-    display: inline-block;
-    padding: 16px 44px;
-    background: var(--navy);
-    color: var(--parchment);
-    font-family: 'Jost', sans-serif;
-    font-size: 10px;
-    font-weight: 500;
-    letter-spacing: 0.26em;
-    text-transform: uppercase;
-    text-decoration: none;
-    border: 2px solid var(--navy);
-    transition: all 0.25s;
-    position: relative;
-    overflow: hidden;
-  }
-  .btn-primary::after {
-    content: '';
-    position: absolute;
-    bottom: 0; left: 0;
-    width: 100%; height: 2px;
-    background: linear-gradient(90deg, var(--gold), var(--gold-light));
-    transform: scaleX(0);
-    transition: transform 0.3s;
-  }
-  .btn-primary:hover { background: var(--navy-deep); border-color: var(--navy-deep); }
-  .btn-primary:hover::after { transform: scaleX(1); }
-
-  .btn-ghost {
-    display: inline-block;
-    padding: 16px 44px;
-    background: transparent;
-    color: var(--navy);
-    font-family: 'Jost', sans-serif;
-    font-size: 10px;
-    font-weight: 500;
-    letter-spacing: 0.26em;
-    text-transform: uppercase;
-    text-decoration: none;
-    border: 1.5px solid var(--sand);
-    transition: all 0.25s;
-  }
-  .btn-ghost:hover { border-color: var(--gold); color: var(--navy); }
-
-  .hero-scroll {
-    position: absolute;
-    bottom: 40px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 3;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
-    opacity: 0;
-    animation: fadeUp 0.8s 1.2s forwards;
-    text-decoration: none;
-  }
-  .hero-scroll span {
-    font-size: 9px;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--muted);
-  }
-  .scroll-line {
-    width: 1px; height: 36px;
-    background: linear-gradient(to bottom, var(--gold), transparent);
-    animation: scrollPulse 2s infinite;
-  }
-  @keyframes scrollPulse {
-    0%, 100% { opacity: 0.4; transform: scaleY(1); }
-    50% { opacity: 1; transform: scaleY(1.1); }
-  }
-
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(22px); }
-    to   { opacity: 1; transform: none; }
-  }
-
-  /* ── SECTION SHARED ── */
-  section { position: relative; }
-
-  .section-inner {
-    max-width: 960px;
-    margin: 0 auto;
-    padding: 0 32px;
-  }
-
-  .eyebrow {
-    font-size: 10px;
-    font-weight: 500;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
+  .header-brand-rule .star {
+    flex: none;
     color: var(--gold);
-    margin-bottom: 14px;
+    font-size: 16px;
+    line-height: 1;
   }
-  .display-heading {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(32px, 5vw, 54px);
+
+  .header-title { display: none; }
+  .header-monogram { display: none; }
+  .header-tagline { display: none; }
+
+  .header-sub {
+    margin-top: 12px;
+    font-size: 14px;
     font-weight: 400;
     color: var(--navy);
-    line-height: 1.15;
+    letter-spacing: 0.06em;
+    max-width: 520px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.7;
+    position: relative;
+    z-index: 2;
+    opacity: 1;
   }
-  .display-heading em {
-    font-style: italic;
+  .header-rule { display: none; }
+
+  /* Progress bar */
+  .progress-wrap {
+    background: var(--parchment);
+    border-bottom: 1px solid var(--rule);
+    padding: 14px 40px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .progress-label {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+  .progress-bar {
+    flex: 1;
+    height: 2px;
+    background: var(--rule);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold), var(--gold-light));
+    width: 0%;
+    transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
+    border-radius: 2px;
+  }
+  .progress-pct {
+    font-size: 11px;
+    font-weight: 500;
     color: var(--gold);
-  }
-  .section-rule {
-    width: 48px; height: 1px;
-    background: linear-gradient(90deg, var(--gold), transparent);
-    margin: 24px 0;
-  }
-  .body-text {
-    font-size: 15px;
-    font-weight: 300;
-    line-height: 1.85;
-    color: #3d3628;
-    max-width: 640px;
+    min-width: 36px;
+    text-align: right;
   }
 
-  /* reveal animation */
-  .reveal {
-    opacity: 0;
-    transform: translateY(28px);
-    transition: opacity 0.7s ease, transform 0.7s ease;
+  /* Main layout */
+  .main {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 60px 24px 100px;
+    position: relative;
   }
-  .reveal.visible {
+  /* Faint compass rose watermark centered in form body */
+  .main::before {
+    content: '';
+    position: fixed;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px; height: 500px;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Ccircle cx='100' cy='100' r='90' fill='none' stroke='%231b2a4a' stroke-width='0.4' opacity='1'/%3E%3Ccircle cx='100' cy='100' r='70' fill='none' stroke='%231b2a4a' stroke-width='0.3' opacity='1'/%3E%3Ccircle cx='100' cy='100' r='50' fill='none' stroke='%231b2a4a' stroke-width='0.2' opacity='1'/%3E%3Cline x1='100' y1='5' x2='100' y2='195' stroke='%231b2a4a' stroke-width='0.3' opacity='1'/%3E%3Cline x1='5' y1='100' x2='195' y2='100' stroke='%231b2a4a' stroke-width='0.3' opacity='1'/%3E%3Cline x1='26' y1='26' x2='174' y2='174' stroke='%231b2a4a' stroke-width='0.2' opacity='1'/%3E%3Cline x1='174' y1='26' x2='26' y2='174' stroke='%231b2a4a' stroke-width='0.2' opacity='1'/%3E%3Cpolygon points='100,10 105,92 100,80 95,92' fill='%23c9a84c' opacity='1'/%3E%3Cpolygon points='100,190 105,108 100,120 95,108' fill='%231b2a4a' opacity='0.8'/%3E%3Cpolygon points='10,100 92,95 80,100 92,105' fill='%231b2a4a' opacity='0.8'/%3E%3Cpolygon points='190,100 108,95 120,100 108,105' fill='%231b2a4a' opacity='0.8'/%3E%3Ccircle cx='100' cy='100' r='4' fill='none' stroke='%23c9a84c' stroke-width='1' opacity='1'/%3E%3Ccircle cx='100' cy='100' r='1.5' fill='%23c9a84c' opacity='1'/%3E%3Ctext x='100' y='22' text-anchor='middle' font-size='9' fill='%231b2a4a' opacity='1' font-family='serif' font-weight='bold'%3EN%3C/text%3E%3Ctext x='100' y='184' text-anchor='middle' font-size='7' fill='%231b2a4a' opacity='0.8' font-family='serif'%3ES%3C/text%3E%3Ctext x='18' y='104' text-anchor='middle' font-size='7' fill='%231b2a4a' opacity='0.8' font-family='serif'%3EW%3C/text%3E%3Ctext x='182' y='104' text-anchor='middle' font-size='7' fill='%231b2a4a' opacity='0.8' font-family='serif'%3EE%3C/text%3E%3C/svg%3E") center/contain no-repeat;
+    opacity: 0.04;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Section */
+  .section {
+    margin-bottom: 56px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  .section.visible {
     opacity: 1;
     transform: none;
   }
 
-  /* ── INTRO STRIP ── */
-  .intro-strip {
-    background: var(--navy);
-    padding: 32px 32px;
-    text-align: center;
-  }
-  .intro-strip p {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(16px, 2.5vw, 22px);
-    font-weight: 300;
-    font-style: italic;
-    color: var(--parchment);
-    letter-spacing: 0.04em;
-    line-height: 1.6;
-    max-width: 700px;
-    margin: 0 auto;
-  }
-  .intro-strip strong {
-    color: var(--gold-light);
-    font-weight: 400;
-    font-style: normal;
-  }
-
-  /* ── ABOUT / MISSION ── */
-  .about {
-    padding: 100px 0 80px;
-    background: var(--cream);
-  }
-  .about-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 80px;
-    align-items: start;
-  }
-  .about-visual {
-    position: relative;
+  .section-header {
     display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .compass-emblem {
-    width: 320px;
-    height: 320px;
-    max-width: 100%;
-  }
-
-  /* ── VISION / VALUES ── */
-  .vision {
-    padding: 80px 0 100px;
-    background: var(--warm-white);
-  }
-  .vision-header {
-    text-align: center;
-    margin-bottom: 64px;
-  }
-  .vision-header .section-rule { margin: 24px auto; }
-  .pillars {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2px;
-  }
-  .pillar {
-    background: white;
-    padding: 48px 36px;
-    border-top: 3px solid transparent;
-    transition: border-color 0.3s, transform 0.3s;
-    position: relative;
-  }
-  .pillar:hover { border-color: var(--gold); transform: translateY(-4px); }
-  .pillar-icon {
-    width: 44px; height: 44px;
-    margin-bottom: 24px;
-  }
-  .pillar-num {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 11px;
-    font-weight: 400;
-    letter-spacing: 0.14em;
-    color: var(--gold);
-    margin-bottom: 10px;
-  }
-  .pillar h3 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 24px;
-    font-weight: 400;
-    color: var(--navy);
-    margin-bottom: 14px;
-    line-height: 1.2;
-  }
-  .pillar p {
-    font-size: 13.5px;
-    line-height: 1.8;
-    color: var(--muted);
-    font-weight: 300;
-  }
-
-  /* ── SERVICES ── */
-  .services {
-    padding: 100px 0;
-    background: var(--cream);
-  }
-  .services-header { margin-bottom: 56px; }
-  .service-list { display: flex; flex-direction: column; gap: 0; }
-  .service-item {
-    display: grid;
-    grid-template-columns: 64px 1fr auto;
-    align-items: center;
-    gap: 32px;
-    padding: 32px 0;
-    border-bottom: 1px solid var(--rule);
-    text-decoration: none;
-    color: inherit;
-    transition: background 0.2s;
-    cursor: default;
-  }
-  .service-item:first-child { border-top: 1px solid var(--rule); }
-  .service-item:hover .service-name { color: var(--gold); }
-  .service-item:hover .service-arrow { transform: translateX(6px); color: var(--gold); }
-  .service-num {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 13px;
-    color: var(--gold);
-    letter-spacing: 0.08em;
-    text-align: right;
-    padding-right: 24px;
-    border-right: 1px solid var(--rule);
-  }
-  .service-body {}
-  .service-name {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 24px;
-    font-weight: 400;
-    color: var(--navy);
-    margin-bottom: 6px;
-    transition: color 0.2s;
-  }
-  .service-desc {
-    font-size: 13px;
-    color: var(--muted);
-    font-weight: 300;
-    line-height: 1.6;
-  }
-  .service-arrow {
-    font-size: 20px;
-    color: var(--sand);
-    transition: all 0.2s;
-    padding-right: 8px;
-  }
-
-  /* ── DESTINATIONS TEASER ── */
-  .destinations {
-    padding: 100px 0;
-    background: var(--navy);
-    overflow: hidden;
-    position: relative;
-  }
-  .destinations::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background:
-      radial-gradient(ellipse 400px 300px at 10% 60%, rgba(107,143,168,0.18) 0%, transparent 70%),
-      radial-gradient(ellipse 300px 200px at 90% 40%, rgba(107,143,168,0.15) 0%, transparent 70%);
-    pointer-events: none;
-  }
-  .destinations .section-inner { position: relative; z-index: 1; }
-  .dest-header { text-align: center; margin-bottom: 56px; }
-  .dest-header .display-heading { color: var(--parchment); }
-  .dest-header .eyebrow { color: var(--gold-light); }
-  .dest-header .body-text { color: rgba(242,235,224,0.7); margin: 0 auto; }
-  .dest-header .section-rule { margin: 24px auto; }
-  .dest-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 2px;
-  }
-  .dest-card {
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(201,168,76,0.2);
-    padding: 36px 28px;
-    text-align: center;
-    transition: background 0.3s, border-color 0.3s;
-    cursor: default;
-  }
-  .dest-card:hover { background: rgba(201,168,76,0.08); border-color: rgba(201,168,76,0.5); }
-  .dest-region {
-    font-size: 9px;
-    font-weight: 500;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 10px;
-  }
-  .dest-name {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 22px;
-    font-weight: 400;
-    color: var(--parchment);
-    line-height: 1.2;
-    margin-bottom: 10px;
-  }
-  .dest-note {
-    font-size: 12px;
-    color: rgba(242,235,224,0.5);
-    line-height: 1.5;
-  }
-
-  /* ── WHY US / PROMISE ── */
-  .promise {
-    padding: 100px 0;
-    background: var(--cream);
-  }
-  .promise-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 80px;
-    align-items: center;
-  }
-  .promise-points { display: flex; flex-direction: column; gap: 36px; }
-  .promise-point {
-    display: grid;
-    grid-template-columns: 32px 1fr;
-    gap: 20px;
-    align-items: start;
-  }
-  .pp-dot {
-    width: 8px; height: 8px;
-    background: var(--gold);
-    border-radius: 50%;
-    margin-top: 7px;
-    flex-shrink: 0;
-  }
-  .pp-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 20px;
-    color: var(--navy);
-    margin-bottom: 6px;
-  }
-  .pp-text {
-    font-size: 13.5px;
-    color: var(--muted);
-    line-height: 1.75;
-  }
-
-  /* stats */
-  .stats {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 3px;
-  }
-  .stat-box {
-    background: white;
-    padding: 36px 28px;
-    border-bottom: 3px solid var(--gold);
-  }
-  .stat-num {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 52px;
-    font-weight: 300;
-    color: var(--navy);
-    line-height: 1;
-    margin-bottom: 8px;
-  }
-  .stat-label {
-    font-size: 11px;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--muted);
-  }
-
-  /* ── TESTIMONIALS ── */
-  .testimonials {
-    padding: 100px 0;
-    background: var(--warm-white);
-  }
-  .test-header { text-align: center; margin-bottom: 60px; }
-  .test-header .section-rule { margin: 24px auto; }
-  .test-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-  }
-  .test-card {
-    background: white;
-    padding: 40px 32px;
-    border-top: 2px solid var(--rule);
-    position: relative;
-    transition: border-color 0.3s;
-  }
-  .test-card:hover { border-color: var(--gold); }
-  .test-quote {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 16px;
-    font-style: italic;
-    color: var(--navy);
-    line-height: 1.75;
+    align-items: baseline;
+    gap: 16px;
     margin-bottom: 28px;
   }
-  .test-divider { width: 30px; height: 1px; background: var(--gold); margin-bottom: 16px; }
-  .test-name {
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--navy);
-  }
-  .test-trip {
-    font-size: 11px;
-    color: var(--muted);
-    margin-top: 3px;
-  }
-  .test-stars {
-    position: absolute;
-    top: 32px; right: 28px;
-    color: var(--gold);
+  .section-num {
+    font-family: 'Cormorant Garamond', serif;
     font-size: 13px;
-    letter-spacing: 2px;
-  }
-
-  /* ── CONTACT ── */
-  .contact {
-    padding: 100px 0 80px;
-    background: var(--cream);
-  }
-  .contact-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 80px;
-    align-items: start;
-  }
-  .contact-info { }
-  .contact-detail {
-    display: flex;
-    gap: 18px;
-    margin-bottom: 32px;
-    align-items: flex-start;
-  }
-  .cd-icon {
-    width: 38px; height: 38px;
-    background: var(--navy);
-    display: flex; align-items: center; justify-content: center;
+    font-weight: 400;
+    color: var(--gold);
+    letter-spacing: 0.1em;
     flex-shrink: 0;
   }
-  .cd-icon svg { width: 16px; height: 16px; stroke: var(--gold); fill: none; stroke-width: 1.5; }
-  .cd-label {
-    font-size: 9px;
-    font-weight: 500;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 4px;
-  }
-  .cd-value {
+  .section-title {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 18px;
+    font-size: 26px;
+    font-weight: 400;
     color: var(--navy);
+    line-height: 1.2;
   }
-  .cd-value a { color: var(--navy); text-decoration: none; transition: color 0.2s; }
-  .cd-value a:hover { color: var(--gold); }
-
-  .social-row {
-    display: flex;
-    gap: 14px;
-    margin-top: 40px;
+  .section-title em { font-style: italic; color: var(--gold); }
+  .section-rule {
+    flex: 1;
+    height: 1px;
+    background: var(--rule);
+    margin-left: 8px;
+    align-self: center;
   }
-  .social-link {
-    width: 40px; height: 40px;
-    border: 1px solid var(--rule);
-    display: flex; align-items: center; justify-content: center;
-    text-decoration: none;
+  .section-hint {
+    font-size: 12px;
     color: var(--muted);
-    font-size: 13px;
-    transition: all 0.2s;
+    letter-spacing: 0.05em;
+    margin-bottom: 20px;
+    margin-top: -16px;
+    padding-left: 0;
   }
-  .social-link:hover { border-color: var(--gold); color: var(--navy); }
 
-  /* contact form */
-  .contact-form { }
-  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
-  .form-group { margin-bottom: 14px; }
-  .form-label {
+  /* Field group */
+  .field-group {
+    margin-bottom: 24px;
+  }
+  .field-label {
     display: block;
-    font-size: 9px;
+    font-size: 11px;
     font-weight: 500;
-    letter-spacing: 0.2em;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--muted);
-    margin-bottom: 8px;
+    margin-bottom: 10px;
   }
-  .form-input {
+  .field-label span {
+    color: var(--gold);
+    font-size: 14px;
+    vertical-align: middle;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="number"],
+  input[type="date"],
+  select,
+  textarea {
     width: 100%;
     background: white;
     border: 1px solid var(--rule);
     border-bottom: 2px solid var(--sand);
-    padding: 13px 14px;
+    border-radius: 0;
+    padding: 14px 16px;
     font-family: 'Jost', sans-serif;
     font-size: 14px;
     font-weight: 300;
@@ -753,1066 +302,835 @@
     outline: none;
     transition: border-color 0.2s, box-shadow 0.2s;
     -webkit-appearance: none;
-    border-radius: 0;
   }
-  .form-input:focus { border-color: var(--gold); border-bottom-color: var(--navy); box-shadow: 0 4px 12px rgba(27,42,74,0.07); }
-  textarea.form-input { min-height: 110px; resize: vertical; line-height: 1.6; }
-  .form-submit {
+  input:focus, select:focus, textarea:focus {
+    border-color: var(--gold);
+    border-bottom-color: var(--navy);
+    box-shadow: 0 4px 12px rgba(27,42,74,0.08);
+  }
+  textarea { resize: vertical; min-height: 100px; line-height: 1.6; }
+  select { cursor: pointer; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%231b2a4a' stroke-width='1.5' fill='none'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 16px center; padding-right: 40px; }
+
+  /* Grid */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  @media (max-width: 600px) {
+    .grid-2, .grid-3 { grid-template-columns: 1fr; }
+  }
+
+  /* Pill choices */
+  .pill-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .pill-option {
+    position: relative;
+  }
+  .pill-option input[type="checkbox"],
+  .pill-option input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    width: 0; height: 0;
+  }
+  .pill-label {
+    display: inline-block;
+    padding: 9px 18px;
+    border: 1px solid var(--rule);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    transition: all 0.18s;
+    color: var(--muted);
+    background: rgba(255,255,255,0.8);
+    user-select: none;
+  }
+  .pill-label:hover { border-color: var(--gold); color: var(--navy); }
+  .pill-option input:checked + .pill-label {
+    background: var(--navy);
+    color: var(--parchment);
+    border-color: var(--navy);
+  }
+
+  /* Range slider */
+  .range-wrap { position: relative; padding: 8px 0 4px; }
+  .range-labels { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); margin-top: 8px; letter-spacing: 0.05em; }
+  .range-value { text-align: center; font-family: 'Cormorant Garamond', serif; font-size: 22px; color: var(--navy); margin-bottom: 8px; }
+  input[type="range"] {
+    -webkit-appearance: none;
     width: 100%;
-    padding: 17px;
+    height: 2px;
+    background: var(--rule);
+    border: none;
+    border-radius: 2px;
+    outline: none;
+    padding: 0;
+  }
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    background: var(--navy);
+    border: 3px solid var(--gold);
+    cursor: pointer;
+    transition: transform 0.15s;
+  }
+  input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.15); }
+  input[type="range"]::-moz-range-thumb { width: 20px; height: 20px; border-radius: 50%; background: var(--navy); border: 3px solid var(--gold); cursor: pointer; }
+
+  /* Star rating */
+  .star-rating { display: flex; gap: 6px; flex-direction: row-reverse; justify-content: flex-end; }
+  .star-rating input { display: none; }
+  .star-rating label {
+    font-size: 28px;
+    cursor: pointer;
+    color: var(--rule);
+    transition: color 0.15s;
+  }
+  .star-rating label:hover,
+  .star-rating label:hover ~ label,
+  .star-rating input:checked ~ label { color: var(--gold); }
+
+  /* Divider */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--rule);
+    margin: 40px 0;
+  }
+
+  /* Submit */
+  .submit-area {
+    text-align: center;
+    padding: 40px 0 0;
+  }
+  .submit-note {
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    margin-bottom: 28px;
+  }
+  .btn-submit {
+    display: inline-block;
+    padding: 18px 60px;
     background: var(--navy);
     color: var(--parchment);
     font-family: 'Jost', sans-serif;
-    font-size: 10px;
+    font-size: 11px;
     font-weight: 500;
-    letter-spacing: 0.26em;
+    letter-spacing: 0.25em;
     text-transform: uppercase;
     border: none;
     cursor: pointer;
-    margin-top: 6px;
-    transition: background 0.25s;
     position: relative;
     overflow: hidden;
+    transition: all 0.25s;
   }
-  .form-submit::after {
+  .btn-submit::after {
     content: '';
-    position: absolute; bottom: 0; left: 0;
-    width: 100%; height: 2px;
-    background: linear-gradient(90deg, var(--gold), var(--gold-light));
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 100%; height: 3px;
+    background: linear-gradient(90deg, var(--gold), var(--gold-light), var(--gold));
     transform: scaleX(0);
     transition: transform 0.3s;
   }
-  .form-submit:hover { background: var(--navy-deep); }
-  .form-submit:hover::after { transform: scaleX(1); }
+  .btn-submit:hover { background: #243558; }
+  .btn-submit:hover::after { transform: scaleX(1); }
+  .btn-submit:active { transform: scale(0.98); }
 
-  /* success msg */
-  .form-success {
+  /* Success */
+  .success-overlay {
     display: none;
-    text-align: center;
-    padding: 40px;
-    background: white;
-    border-top: 3px solid var(--gold);
-  }
-  .form-success .fs-icon { font-size: 32px; color: var(--gold); margin-bottom: 12px; }
-  .form-success h4 { font-family: 'Cormorant Garamond', serif; font-size: 26px; color: var(--navy); margin-bottom: 8px; }
-  .form-success p { font-size: 13px; color: var(--muted); line-height: 1.7; }
-
-  /* ── CTA BANNER ── */
-  .cta-banner {
-    padding: 80px 32px;
-    background: var(--navy-deep);
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-  }
-  .cta-banner::before {
-    content: '';
-    position: absolute; inset: 0;
-    background: radial-gradient(ellipse 600px 400px at 50% 50%, rgba(201,168,76,0.07) 0%, transparent 70%);
-  }
-  .cta-banner .section-inner { position: relative; }
-  .cta-banner .display-heading { color: var(--parchment); margin-bottom: 16px; }
-  .cta-banner .body-text { color: rgba(242,235,224,0.65); margin: 0 auto 40px; }
-  .cta-banner .section-rule { margin: 20px auto; }
-
-  /* ── FOOTER ── */
-  footer {
-    background: var(--navy);
-    padding: 56px 0 32px;
-    border-top: 1px solid rgba(255,255,255,0.06);
-  }
-  .footer-inner {
-    max-width: 960px;
-    margin: 0 auto;
-    padding: 0 32px;
-  }
-  .footer-top {
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1fr;
-    gap: 40px;
-    margin-bottom: 48px;
-  }
-  .footer-brand-col {}
-  .footer-brand-name {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 22px;
-    font-weight: 600;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--parchment);
-    margin-bottom: 12px;
-  }
-  .footer-tagline {
-    font-size: 10px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 16px;
-  }
-  .footer-desc {
-    font-size: 13px;
-    color: rgba(242,235,224,0.5);
-    line-height: 1.75;
-    max-width: 260px;
-  }
-  .footer-col h5 {
-    font-size: 9px;
-    font-weight: 500;
-    letter-spacing: 0.24em;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 20px;
-  }
-  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
-  .footer-col ul li a {
-    font-size: 13px;
-    color: rgba(242,235,224,0.6);
-    text-decoration: none;
-    transition: color 0.2s;
-  }
-  .footer-col ul li a:hover { color: var(--parchment); }
-  .footer-bottom {
-    border-top: 1px solid rgba(255,255,255,0.08);
-    padding-top: 28px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 12px;
-  }
-  .footer-copy {
-    font-size: 11px;
-    color: rgba(242,235,224,0.35);
-    letter-spacing: 0.06em;
-  }
-  .footer-sub-links {
-    display: flex; gap: 24px;
-  }
-  .footer-sub-links a {
-    font-size: 10px;
-    color: rgba(242,235,224,0.35);
-    text-decoration: none;
-    letter-spacing: 0.1em;
-    transition: color 0.2s;
-  }
-  .footer-sub-links a:hover { color: var(--gold); }
-
-  /* MOBILE */
-  @media (max-width: 768px) {
-    nav { padding: 0 20px; }
-    .nav-links { display: none; flex-direction: column; position: fixed; top: 68px; left: 0; right: 0; background: var(--cream); padding: 24px; border-bottom: 1px solid var(--rule); gap: 20px; }
-    .nav-links.open { display: flex; }
-    .nav-toggle { display: block; }
-    .about-grid, .promise-grid, .contact-grid { grid-template-columns: 1fr; gap: 48px; }
-    .about-visual { order: -1; }
-    .compass-emblem { width: 240px; height: 240px; }
-    .pillars { grid-template-columns: 1fr; }
-    .dest-grid { grid-template-columns: repeat(2, 1fr); }
-    .test-grid { grid-template-columns: 1fr; }
-    .stats { grid-template-columns: 1fr 1fr; }
-    .footer-top { grid-template-columns: 1fr 1fr; }
-    .footer-brand-col { grid-column: span 2; }
-    .form-row { grid-template-columns: 1fr; }
-    .service-item { grid-template-columns: 40px 1fr; }
-    .service-arrow { display: none; }
-    [style*="grid-template-columns: repeat(5, 1fr)"] { grid-template-columns: 1fr 1fr !important; }
-  }
-  @media (max-width: 480px) {
-    .dest-grid { grid-template-columns: 1fr; }
-    .stats { grid-template-columns: 1fr; }
-    [style*="grid-template-columns: repeat(5, 1fr)"] { grid-template-columns: 1fr !important; }
-  }
-
-  /* ── FLIGHT PATH OVERLAY ── */
-  #flightOverlay {
     position: fixed;
     inset: 0;
-    width: 100vw;
-    height: 100vh;
-    pointer-events: none;
-    z-index: 1;
-    overflow: visible;
+    background: rgba(27,42,74,0.88);
+    z-index: 999;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(4px);
   }
-  #flightOverlay svg {
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    overflow: visible;
+  .success-overlay.show { display: flex; }
+  .success-card {
+    background: var(--cream);
+    padding: 60px 50px;
+    max-width: 460px;
+    width: 90%;
+    text-align: center;
+    animation: fadeUp 0.4s ease;
+    border-top: 3px solid var(--gold);
   }
-  .flight-plane {
-    transform-origin: center center;
+  @keyframes fadeUp { from { opacity:0; transform: translateY(30px); } to { opacity:1; transform: none; } }
+  .success-icon {
+    font-size: 36px;
+    margin-bottom: 16px;
+    color: var(--gold);
   }
-  @keyframes planeFly {
-    0%   { opacity: 0; }
-    5%   { opacity: 1; }
-    95%  { opacity: 1; }
-    100% { opacity: 0; }
+  .success-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 34px;
+    font-weight: 300;
+    color: var(--navy);
+    margin-bottom: 14px;
   }
-  @media (prefers-reduced-motion: reduce) {
-    #flightOverlay { display: none; }
+  .success-msg {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.7;
+    letter-spacing: 0.04em;
+  }
+  .success-rule { width: 40px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin: 20px auto; }
+
+  /* Footer tagline below submit */
+  .footer-tagline {
+    margin-top: 24px;
+    font-family: 'Jost', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    opacity: 0.85;
+  }
+
+  /* Responsive */
+  @media (max-width: 600px) {
+    .header { padding: 40px 24px 36px; }
+    .progress-wrap { padding: 12px 20px; }
+    .main { padding: 40px 20px 80px; }
   }
 </style>
 </head>
 <body>
 
-<!-- ── FLIGHT PATH OVERLAY (fixed, full viewport, scroll-driven via JS) ── -->
-<div id="flightOverlay">
-  <svg id="flightSVG" viewBox="0 0 1000 700" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+<header class="header">
+
+  <!-- SVG layer: watercolor geography, compass rose, BP monogram, plane trail, stamp, dashed routes -->
+  <svg class="header-svg-layer" viewBox="0 0 1000 340" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
     <defs>
-      <!-- Gradient fade for the trail behind the plane -->
-      <linearGradient id="trailGrad" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="1000" y2="700">
-        <stop offset="0%" stop-color="#c9a84c" stop-opacity="0"/>
-        <stop offset="40%" stop-color="#c9a84c" stop-opacity="0.18"/>
-        <stop offset="100%" stop-color="#c9a84c" stop-opacity="0.28"/>
-      </linearGradient>
+      <!-- Watercolor blur filter -->
+      <filter id="wc" x="-30%" y="-30%" width="160%" height="160%">
+        <feGaussianBlur stdDeviation="10"/>
+      </filter>
+      <filter id="wc2" x="-30%" y="-30%" width="160%" height="160%">
+        <feGaussianBlur stdDeviation="16"/>
+      </filter>
+      <filter id="wc3" x="-20%" y="-20%" width="140%" height="140%">
+        <feGaussianBlur stdDeviation="7"/>
+      </filter>
     </defs>
 
-    <!-- Route 1: sweeping arc top-left to mid-right -->
-    <path id="route1"
-      d="M -80 120 Q 150 60 320 180 Q 480 290 650 200 Q 820 110 1080 140"
-      fill="none" stroke="#1b2a4a" stroke-width="1" stroke-dasharray="9,8" opacity="0.10"/>
+    <!-- ── WATERCOLOR GEOGRAPHY ── -->
+    <!-- North America — left side -->
+    <ellipse cx="115" cy="140" rx="95" ry="75" fill="#7fa8bf" opacity="0.22" filter="url(#wc2)"/>
+    <ellipse cx="95" cy="175" rx="70" ry="50" fill="#6b8fa8" opacity="0.18" filter="url(#wc)"/>
+    <ellipse cx="130" cy="200" rx="55" ry="38" fill="#8aabbd" opacity="0.15" filter="url(#wc)"/>
+    <!-- Central America nub -->
+    <ellipse cx="148" cy="230" rx="22" ry="18" fill="#6b8fa8" opacity="0.14" filter="url(#wc3)"/>
+    <!-- South America -->
+    <ellipse cx="185" cy="280" rx="55" ry="50" fill="#7fa8bf" opacity="0.18" filter="url(#wc2)"/>
+    <ellipse cx="175" cy="308" rx="35" ry="25" fill="#1b2a4a" opacity="0.13" filter="url(#wc2)"/>
 
-    <!-- Route 2: lower gentle S-curve -->
-    <path id="route2"
-      d="M -60 420 Q 120 350 300 440 Q 500 530 680 420 Q 860 310 1080 380"
-      fill="none" stroke="#1b2a4a" stroke-width="0.8" stroke-dasharray="7,7" opacity="0.08"/>
+    <!-- Europe -->
+    <ellipse cx="420" cy="105" rx="60" ry="42" fill="#6b8fa8" opacity="0.18" filter="url(#wc)"/>
+    <!-- Africa -->
+    <ellipse cx="435" cy="200" rx="52" ry="72" fill="#7fa8bf" opacity="0.16" filter="url(#wc2)"/>
+    <ellipse cx="438" cy="255" rx="38" ry="40" fill="#6b8fa8" opacity="0.12" filter="url(#wc)"/>
 
-    <!-- Route 3: diagonal upper-right to lower-left -->
-    <path id="route3"
-      d="M 1100 80 Q 900 200 720 160 Q 520 120 360 280 Q 200 430 -60 510"
-      fill="none" stroke="#c9a84c" stroke-width="0.7" stroke-dasharray="6,8" opacity="0.10"/>
+    <!-- Asia — large mass right of center -->
+    <ellipse cx="680" cy="115" rx="145" ry="80" fill="#7fa8bf" opacity="0.20" filter="url(#wc2)"/>
+    <ellipse cx="720" cy="170" rx="100" ry="60" fill="#6b8fa8" opacity="0.16" filter="url(#wc)"/>
+    <ellipse cx="640" cy="160" rx="65" ry="45" fill="#8aabbd" opacity="0.14" filter="url(#wc)"/>
+    <!-- Southeast Asia islands -->
+    <ellipse cx="790" cy="210" rx="40" ry="28" fill="#6b8fa8" opacity="0.14" filter="url(#wc3)"/>
+    <ellipse cx="820" cy="230" rx="22" ry="16" fill="#7fa8bf" opacity="0.12" filter="url(#wc3)"/>
 
-    <!-- Route 4: long shallow curve across the full width -->
-    <path id="route4"
-      d="M -100 580 Q 200 500 450 560 Q 700 620 950 520 Q 1050 490 1120 460"
-      fill="none" stroke="#1b2a4a" stroke-width="0.7" stroke-dasharray="8,9" opacity="0.07"/>
+    <!-- Australia -->
+    <ellipse cx="850" cy="260" rx="52" ry="38" fill="#7fa8bf" opacity="0.17" filter="url(#wc)"/>
+    <ellipse cx="870" cy="280" rx="30" ry="20" fill="#6b8fa8" opacity="0.12" filter="url(#wc3)"/>
 
-    <!-- Gold trail line that follows the plane path -->
-    <path id="goldTrail"
-      d="M -80 120 Q 150 60 320 180 Q 480 290 650 200 Q 820 110 1080 140"
-      fill="none" stroke="url(#trailGrad)" stroke-width="1.4" opacity="0.5" stroke-dasharray="none"/>
+    <!-- Bottom-left dark ink blot (matching business card) -->
+    <ellipse cx="30" cy="318" rx="90" ry="55" fill="#1b2a4a" opacity="0.20" filter="url(#wc2)"/>
+    <ellipse cx="55" cy="330" rx="50" ry="30" fill="#243558" opacity="0.15" filter="url(#wc)"/>
+    <!-- Gold constellation dots bottom-left -->
+    <circle cx="48" cy="295" r="2" fill="#c9a84c" opacity="0.5"/>
+    <circle cx="62" cy="308" r="1.5" fill="#c9a84c" opacity="0.4"/>
+    <circle cx="35" cy="310" r="1" fill="#c9a84c" opacity="0.45"/>
+    <line x1="48" y1="295" x2="62" y2="308" stroke="#c9a84c" stroke-width="0.5" opacity="0.3"/>
+    <line x1="62" y1="308" x2="35" y2="310" stroke="#c9a84c" stroke-width="0.5" opacity="0.3"/>
 
-    <!-- Airplane icon — rendered last so it sits above all route lines -->
-    <g id="planeGroup" opacity="0.22">
+    <!-- Dashed flight route curves -->
+    <path d="M 60 180 Q 200 80 380 140 Q 500 180 620 100 Q 750 30 920 60" fill="none" stroke="#1b2a4a" stroke-width="1" stroke-dasharray="6,5" opacity="0.18"/>
+    <path d="M 80 260 Q 250 200 420 230 Q 560 255 700 190 Q 820 140 960 160" fill="none" stroke="#1b2a4a" stroke-width="0.8" stroke-dasharray="5,5" opacity="0.12"/>
+    <path d="M 30 120 Q 180 60 320 110 Q 450 155 600 80" fill="none" stroke="#1b2a4a" stroke-width="0.7" stroke-dasharray="4,5" opacity="0.1"/>
+
+    <!-- Plane trail swoosh (gold) -->
+    <path d="M 110 255 Q 280 160 500 170 Q 680 178 870 70" fill="none" stroke="#c9a84c" stroke-width="2" opacity="0.65"/>
+
+    <!-- Airplane icon at end of trail — larger and cleaner -->
+    <g transform="translate(872,66) rotate(-28)">
       <!-- fuselage -->
-      <ellipse cx="0" cy="0" rx="3.5" ry="13" fill="#c9a84c"/>
+      <ellipse cx="0" cy="0" rx="3" ry="11" fill="#c9a84c" opacity="0.95"/>
       <!-- main wings -->
-      <polygon points="0,-3 18,8 16,10 0,5 -16,10 -18,8" fill="#c9a84c"/>
-      <!-- tail -->
-      <polygon points="0,8 8,15 7,17 0,12 -7,17 -8,15" fill="#c9a84c"/>
+      <polygon points="0,-2 14,6 12,8 0,4 -12,8 -14,6" fill="#c9a84c" opacity="0.95"/>
+      <!-- tail wings -->
+      <polygon points="0,7 6,12 5,13 0,10 -5,13 -6,12" fill="#c9a84c" opacity="0.9"/>
     </g>
-  </svg>
-</div>
 
-<!-- ── NAVIGATION ── -->
-<nav id="mainNav">
-  <a href="#" class="nav-brand">
-    <span class="bp-mono">BP</span>
-    Boundless Pursuit
-  </a>
-  <ul class="nav-links" id="navLinks">
-    <li><a href="#about">About</a></li>
-    <li><a href="#vision">Our Vision</a></li>
-    <li><a href="#services">Services</a></li>
-    <li><a href="#destinations">Destinations</a></li>
-    <li><a href="our-story.html">Meet Us</a></li>
-    <li><a href="faq.html">FAQ</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="HTML-travel-intake-form.html" class="nav-cta">Plan My Trip</a></li>
-  </ul>
-  <button class="nav-toggle" id="navToggle" aria-label="Menu">
-    <span></span><span></span><span></span>
-  </button>
-</nav>
+    <!-- Compass rose background circle (gold stroke) -->
+    <circle cx="500" cy="152" r="100" fill="none" stroke="#c9a84c" stroke-width="1.5" opacity="0.6"/>
+    <circle cx="500" cy="152" r="96" fill="rgba(240,233,216,0.45)" stroke="none"/>
 
-<!-- ── HERO ── -->
-<section class="hero" id="home">
+    <!-- Compass cardinal lines -->
+    <line x1="500" y1="52" x2="500" y2="252" stroke="#c9a84c" stroke-width="0.8" opacity="0.5"/>
+    <line x1="400" y1="152" x2="600" y2="152" stroke="#c9a84c" stroke-width="0.8" opacity="0.5"/>
+    <line x1="429" y1="81" x2="571" y2="223" stroke="#c9a84c" stroke-width="0.5" opacity="0.3"/>
+    <line x1="571" y1="81" x2="429" y2="223" stroke="#c9a84c" stroke-width="0.5" opacity="0.3"/>
 
-  <svg class="hero-svg" viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-    <defs>
-      <filter id="wc" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="14"/></filter>
-      <filter id="wc2" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="22"/></filter>
-      <filter id="wc3" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="8"/></filter>
-    </defs>
-    <!-- Continents watercolor -->
-    <ellipse cx="138" cy="230" rx="110" ry="90" fill="#7fa8bf" opacity="0.20" filter="url(#wc2)"/>
-    <ellipse cx="115" cy="290" rx="80" ry="58" fill="#6b8fa8" opacity="0.16" filter="url(#wc)"/>
-    <ellipse cx="180" cy="360" rx="65" ry="55" fill="#7fa8bf" opacity="0.16" filter="url(#wc2)"/>
-    <ellipse cx="170" cy="430" rx="42" ry="35" fill="#1b2a4a" opacity="0.10" filter="url(#wc2)"/>
-    <ellipse cx="490" cy="175" rx="72" ry="50" fill="#6b8fa8" opacity="0.16" filter="url(#wc)"/>
-    <ellipse cx="505" cy="290" rx="62" ry="85" fill="#7fa8bf" opacity="0.14" filter="url(#wc2)"/>
-    <ellipse cx="810" cy="185" rx="170" ry="95" fill="#7fa8bf" opacity="0.18" filter="url(#wc2)"/>
-    <ellipse cx="860" cy="275" rx="115" ry="70" fill="#6b8fa8" opacity="0.14" filter="url(#wc)"/>
-    <ellipse cx="940" cy="340" rx="62" ry="44" fill="#7fa8bf" opacity="0.15" filter="url(#wc)"/>
-    <ellipse cx="1010" cy="400" rx="62" ry="44" fill="#7fa8bf" opacity="0.15" filter="url(#wc)"/>
-    <!-- Bottom dark blot -->
-    <ellipse cx="36" cy="640" rx="110" ry="66" fill="#1b2a4a" opacity="0.18" filter="url(#wc2)"/>
-    <!-- Gold constellation -->
-    <circle cx="58" cy="610" r="2.5" fill="#c9a84c" opacity="0.5"/>
-    <circle cx="75" cy="628" r="1.8" fill="#c9a84c" opacity="0.4"/>
-    <circle cx="42" cy="622" r="1.2" fill="#c9a84c" opacity="0.45"/>
-    <line x1="58" y1="610" x2="75" y2="628" stroke="#c9a84c" stroke-width="0.6" opacity="0.3"/>
-    <line x1="75" y1="628" x2="42" y2="622" stroke="#c9a84c" stroke-width="0.6" opacity="0.3"/>
-    <!-- Flight routes -->
-    <path d="M 70 380 Q 240 200 480 260 Q 640 310 820 180 Q 980 80 1160 100" fill="none" stroke="#1b2a4a" stroke-width="1.2" stroke-dasharray="7,6" opacity="0.14"/>
-    <path d="M 95 490 Q 300 380 520 430 Q 700 470 900 340 Q 1050 240 1180 260" fill="none" stroke="#1b2a4a" stroke-width="0.9" stroke-dasharray="6,6" opacity="0.10"/>
-    <!-- Gold plane trail -->
-    <path d="M 130 480 Q 340 290 620 300 Q 840 308 1080 120" fill="none" stroke="#c9a84c" stroke-width="2.2" opacity="0.6"/>
-    <!-- Airplane -->
-    <g transform="translate(1083,117) rotate(-30)">
-      <ellipse cx="0" cy="0" rx="3.5" ry="13" fill="#c9a84c" opacity="0.95"/>
-      <polygon points="0,-3 16,7 14,9 0,5 -14,9 -16,7" fill="#c9a84c" opacity="0.95"/>
-      <polygon points="0,8 7,14 6,15.5 0,12 -6,15.5 -7,14" fill="#c9a84c" opacity="0.9"/>
+    <!-- Compass points (N gold, S/E/W navy) -->
+    <polygon points="500,54 505,138 500,125 495,138" fill="#c9a84c" opacity="0.9"/>
+    <polygon points="500,250 505,166 500,179 495,166" fill="#1b2a4a" opacity="0.5"/>
+    <polygon points="402,152 486,147 473,152 486,157" fill="#1b2a4a" opacity="0.5"/>
+    <polygon points="598,152 514,147 527,152 514,157" fill="#1b2a4a" opacity="0.5"/>
+
+    <!-- N S E W labels -->
+    <text x="500" y="47" text-anchor="middle" font-size="13" fill="#c9a84c" font-family="'Cormorant Garamond',serif" font-weight="600" opacity="0.9">N</text>
+    <text x="500" y="266" text-anchor="middle" font-size="11" fill="#1b2a4a" font-family="'Cormorant Garamond',serif" opacity="0.6">S</text>
+    <text x="390" y="156" text-anchor="middle" font-size="11" fill="#1b2a4a" font-family="'Cormorant Garamond',serif" opacity="0.6">W</text>
+    <text x="612" y="156" text-anchor="middle" font-size="11" fill="#1b2a4a" font-family="'Cormorant Garamond',serif" opacity="0.6">E</text>
+
+    <!-- BP Monogram inside circle — reduced size -->
+    <text x="491" y="168" text-anchor="middle" font-size="52" fill="#1b2a4a" font-family="'Cormorant Garamond',serif" font-weight="600" opacity="0.90">B</text>
+    <text x="513" y="175" text-anchor="middle" font-size="52" fill="#1b2a4a" font-family="'Cormorant Garamond',serif" font-weight="600" opacity="0.90">P</text>
+
+    <!-- Small decorative star below compass -->
+    <g transform="translate(500,268)" opacity="0.7">
+      <polygon points="0,-7 1.5,-2 7,-2 2.5,1.5 4,7 0,3.5 -4,7 -2.5,1.5 -7,-2 -1.5,-2" fill="#c9a84c"/>
     </g>
+
+    <!-- "The World Awaits" stamp (bottom right) -->
+    <g transform="translate(820,230)" opacity="0.55">
+      <circle cx="0" cy="0" r="44" fill="none" stroke="#1b2a4a" stroke-width="1.2"/>
+      <circle cx="0" cy="0" r="38" fill="none" stroke="#1b2a4a" stroke-width="0.5"/>
+      <line x1="-35" y1="14" x2="35" y2="14" stroke="#1b2a4a" stroke-width="0.8" opacity="0.5"/>
+      <line x1="-35" y1="20" x2="35" y2="20" stroke="#1b2a4a" stroke-width="0.6" opacity="0.4"/>
+      <line x1="-30" y1="26" x2="30" y2="26" stroke="#1b2a4a" stroke-width="0.5" opacity="0.35"/>
+      <polygon points="0,-28 2,-22 8,-22 3,-18 5,-12 0,-16 -5,-12 -3,-18 -8,-22 -2,-22" fill="#1b2a4a" opacity="0.6" transform="scale(0.6) translate(0,-8)"/>
+      <text x="0" y="-18" text-anchor="middle" font-size="7.5" fill="#1b2a4a" font-family="'Jost',sans-serif" font-weight="500" letter-spacing="2">THE WORLD</text>
+      <text x="0" y="8" text-anchor="middle" font-size="7.5" fill="#1b2a4a" font-family="'Jost',sans-serif" font-weight="500" letter-spacing="2">AWAITS</text>
+    </g>
+
   </svg>
 
-  <div class="hero-content">
-    <h1 class="hero-brand">Boundless Pursuit</h1>
-    <div class="hero-rule-row">
-      <span class="line"></span>
-      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <polygon points="8,0 9.5,6.5 16,8 9.5,9.5 8,16 6.5,9.5 0,8 6.5,6.5" fill="#c9a84c" opacity="0.85"/>
-      </svg>
-      <span class="line"></span>
+  <!-- Text content -->
+  <div class="header-content">
+    <!-- Space for compass SVG height -->
+    <div style="height:200px;"></div>
+    <!-- BOUNDLESS PURSUIT brand name -->
+    <div class="header-brand">Boundless Pursuit</div>
+    <!-- Gold rule with star -->
+    <div class="header-brand-rule">
+      <span></span>
+      <span class="star">✦</span>
+      <span></span>
     </div>
-    <p class="hero-tagline">Every journey begins with a single dream. We transform yours into an adventure — thoughtfully designed, flawlessly delivered, and remembered for a lifetime.</p>
-    <div class="hero-actions">
-      <a href="HTML-travel-intake-form.html" class="btn-primary">Begin Your Journey</a>
-      <a href="#about" class="btn-ghost">Learn More</a>
-    </div>
+    <p class="header-sub">Complete your travel questionnaire so we can craft an experience tailored precisely to you.</p>
   </div>
 
-  <a href="#about" class="hero-scroll">
-    <span>Discover</span>
-    <div class="scroll-line"></div>
-  </a>
+</header>
 
-</section>
-
-<!-- ── INTRO STRIP ── -->
-<div class="intro-strip">
-  <p>"Inspiring travelers to experience the world — to <strong>explore with curiosity</strong>, embrace every moment, and trust in a journey crafted with passion and purpose — because at Boundless Pursuit, we help create <strong>memories that last a lifetime</strong>."</p>
+<div class="progress-wrap">
+  <span class="progress-label">Your journey</span>
+  <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  <span class="progress-pct" id="progressPct">0%</span>
 </div>
 
-<!-- ── ABOUT / MISSION ── -->
-<section class="about" id="about">
-  <div class="section-inner">
-    <div class="about-grid">
-      <div class="reveal">
-        <p class="eyebrow">Our Mission</p>
-        <h2 class="display-heading">Crafting destinations as <em>unique</em> as you are</h2>
+<main class="main" id="mainForm">
+  <form id="intakeForm" action="https://formspree.io/f/xvzjwdko" method="POST" novalidate>
+
+    <!-- Contact -->
+    <div class="section" id="s0">
+      <div class="section-header">
+        <h2 class="section-title">Contact <em>Details</em></h2>
         <div class="section-rule"></div>
-        <p class="body-text">At Boundless Pursuit, we believe the best part of life is the memories we create and the people we share them with. Our mission is to help people explore the world, connect with others, and create memories that last a lifetime.</p>
-        <br>
-        <p class="body-text">We are real travelers — not algorithms. Our extensive personal travel knowledge and genuine passion for exploration set us apart, making us a trusted and invaluable partner in your journey. Every trip we plan is crafted with purpose, passion, and a deep love for the world.</p>
-        <br>
       </div>
-      <div class="about-visual reveal" style="transition-delay:0.15s;">
-        <!-- Compass emblem SVG -->
-        <svg class="compass-emblem" viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <filter id="soft"><feGaussianBlur stdDeviation="3"/></filter>
-          </defs>
-          <!-- Parchment background glow -->
-          <circle cx="160" cy="160" r="148" fill="#f0e9d8" opacity="0.8"/>
-          <!-- Outer decorative rings -->
-          <circle cx="160" cy="160" r="148" fill="none" stroke="#c9a84c" stroke-width="1.5" opacity="0.5"/>
-          <circle cx="160" cy="160" r="140" fill="none" stroke="#c9a84c" stroke-width="0.5" opacity="0.3"/>
-          <circle cx="160" cy="160" r="118" fill="none" stroke="#1b2a4a" stroke-width="0.6" opacity="0.2"/>
-          <!-- Cardinal lines -->
-          <line x1="160" y1="12" x2="160" y2="308" stroke="#c9a84c" stroke-width="0.8" opacity="0.4"/>
-          <line x1="12" y1="160" x2="308" y2="160" stroke="#c9a84c" stroke-width="0.8" opacity="0.4"/>
-          <line x1="51" y1="51" x2="269" y2="269" stroke="#c9a84c" stroke-width="0.5" opacity="0.25"/>
-          <line x1="269" y1="51" x2="51" y2="269" stroke="#c9a84c" stroke-width="0.5" opacity="0.25"/>
-          <!-- Compass points -->
-          <polygon points="160,14 166,142 160,128 154,142" fill="#c9a84c" opacity="0.9"/>
-          <polygon points="160,306 166,178 160,192 154,178" fill="#1b2a4a" opacity="0.55"/>
-          <polygon points="14,160 142,154 128,160 142,166" fill="#1b2a4a" opacity="0.55"/>
-          <polygon points="306,160 178,154 192,160 178,166" fill="#1b2a4a" opacity="0.55"/>
-          <!-- N S E W -->
-          <text x="160" y="8" text-anchor="middle" font-size="14" fill="#c9a84c" font-family="'Cormorant Garamond',serif" font-weight="600" opacity="0.9">N</text>
-          <text x="160" y="318" text-anchor="middle" font-size="12" fill="#1b2a4a" font-family="'Cormorant Garamond',serif" opacity="0.6">S</text>
-          <text x="7" y="164" text-anchor="middle" font-size="12" fill="#1b2a4a" font-family="'Cormorant Garamond',serif" opacity="0.6">W</text>
-          <text x="315" y="164" text-anchor="middle" font-size="12" fill="#1b2a4a" font-family="'Cormorant Garamond',serif" opacity="0.6">E</text>
-          <!-- BP Monogram -->
-          <text x="148" y="178" text-anchor="middle" font-size="68" fill="#1b2a4a" font-family="'Cormorant Garamond',serif" font-weight="600" opacity="0.92">B</text>
-          <text x="176" y="186" text-anchor="middle" font-size="68" fill="#1b2a4a" font-family="'Cormorant Garamond',serif" font-weight="600" opacity="0.92">P</text>
-          <!-- Star ornament -->
-          <g transform="translate(160,306)" opacity="0.7">
-            <polygon points="0,-9 2,-3 8,-3 3,2 5,9 0,4.5 -5,9 -3,2 -8,-3 -2,-3" fill="#c9a84c"/>
-          </g>
-          <!-- Inner center dot -->
-          <circle cx="160" cy="160" r="5" fill="none" stroke="#c9a84c" stroke-width="1.2" opacity="0.7"/>
-          <circle cx="160" cy="160" r="2" fill="#c9a84c" opacity="0.7"/>
-        </svg>
+      <div class="grid-2">
+        <div class="field-group">
+          <label class="field-label">First Name <span>*</span></label>
+          <input type="text" name="first_name" placeholder="Your first name" required>
+        </div>
+        <div class="field-group">
+          <label class="field-label">Last Name <span>*</span></label>
+          <input type="text" name="last_name" placeholder="Your last name" required>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="field-group">
+          <label class="field-label">Email Address <span>*</span></label>
+          <input type="email" name="email" placeholder="your@email.com" required>
+        </div>
+        <div class="field-group">
+          <label class="field-label">Phone Number</label>
+          <input type="tel" name="phone" placeholder="+1 (000) 000-0000">
+        </div>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Preferred Mode of Contact</label>
+        <div class="pill-grid">
+          <div class="pill-option"><input type="radio" name="contact_pref" id="cp1" value="email"><label class="pill-label" for="cp1">Email</label></div>
+          <div class="pill-option"><input type="radio" name="contact_pref" id="cp2" value="phone"><label class="pill-label" for="cp2">Phone Call</label></div>
+          <div class="pill-option"><input type="radio" name="contact_pref" id="cp3" value="text"><label class="pill-label" for="cp3">Text / SMS</label></div>
+        </div>
       </div>
     </div>
-  </div>
-</section>
 
-<!-- ── VISION / PILLARS ── -->
-<section class="vision" id="vision">
-  <div class="section-inner">
-    <div class="vision-header reveal">
-      <p class="eyebrow">Our Vision</p>
-      <h2 class="display-heading">The principles that <em>guide</em> every journey</h2>
-      <div class="section-rule"></div>
-      <p class="body-text" style="margin:0 auto;">We are guided by a deep commitment to personal connection, creative discovery, and the belief that travel — done thoughtfully — changes lives.</p>
-    </div>
-    <div class="pillars">
-      <div class="pillar reveal" style="transition-delay:0.1s;">
-        <svg class="pillar-icon" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="22" cy="22" r="20" stroke="#c9a84c" stroke-width="1.2" opacity="0.5"/>
-          <path d="M22 8 L22 36 M8 22 L36 22" stroke="#1b2a4a" stroke-width="1.2" opacity="0.5"/>
-          <polygon points="22,10 24,20 22,18 20,20" fill="#c9a84c" opacity="0.8"/>
-          <circle cx="22" cy="22" r="3" fill="none" stroke="#c9a84c" stroke-width="1.2"/>
-        </svg>
-        <h3>Real Travelers, Not Algorithms</h3>
-        <p>We bring extensive personal travel experience and genuine passion to every itinerary. Unlike online platforms, we offer the kind of trusted, human expertise that no booking engine can replicate.</p>
-      </div>
-      <div class="pillar reveal" style="transition-delay:0.2s;">
-        <svg class="pillar-icon" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="22" cy="22" r="20" stroke="#c9a84c" stroke-width="1.2" opacity="0.5"/>
-          <path d="M14 28 C 16 18, 28 18, 30 28" stroke="#1b2a4a" stroke-width="1.2" opacity="0.5" fill="none"/>
-          <circle cx="22" cy="16" r="4" stroke="#1b2a4a" stroke-width="1.2" opacity="0.5"/>
-          <circle cx="22" cy="22" r="3" fill="none" stroke="#c9a84c" stroke-width="1.2"/>
-        </svg>
-        <h3>Exclusive Access & Perks</h3>
-        <p>As Virtuoso members, we unlock exclusive hotel benefits, priority upgrades, and preferred partner value that no online travel agency can offer you.</p>
-      </div>
-      <div class="pillar reveal" style="transition-delay:0.3s;">
-        <svg class="pillar-icon" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="22" cy="22" r="20" stroke="#c9a84c" stroke-width="1.2" opacity="0.5"/>
-          <polygon points="22,12 24,19 31,19 25.5,23.5 27.5,30.5 22,26.5 16.5,30.5 18.5,23.5 13,19 20,19" stroke="#c9a84c" stroke-width="1" fill="none" opacity="0.8"/>
-          <circle cx="22" cy="22" r="3" fill="none" stroke="#c9a84c" stroke-width="1.2"/>
-        </svg>
-        <h3>Memories That Last a Lifetime</h3>
-        <p>We are emotionally intelligent planners who understand that travel is about the people you share it with. Every journey we craft is built around connection, meaning, and moments worth remembering forever.</p>
-      </div>
-    </div>
-  </div>
-</section>
+    <hr class="divider">
 
-<!-- ── SERVICES ── -->
-<section class="services" id="services">
-  <div class="section-inner">
-    <div class="services-header reveal">
-      <p class="eyebrow">What We Offer</p>
-      <h2 class="display-heading">Services tailored <em>for you</em></h2>
-      <div class="section-rule"></div>
-      <p class="body-text">From a single weekend escape to a multi-month expedition, every request is an opportunity to create something truly memorable.</p>
-    </div>
-    <div class="service-list reveal" style="transition-delay:0.1s;">
-      <div class="service-item">
-        <span class="service-num">01</span>
-        <div class="service-body">
-          <div class="service-name">Bespoke Itinerary Planning</div>
-          <div class="service-desc">Custom day-by-day travel plans designed around your exact wishes — activities, dining, pace, and meaningful moments built in from the start.</div>
-        </div>
-        <span class="service-arrow">→</span>
-      </div>
-      <div class="service-item">
-        <span class="service-num">02</span>
-        <div class="service-body">
-          <div class="service-name">Accommodation Curation</div>
-          <div class="service-desc">Handpicked hotels, private villas, boutique retreats, and eco lodges — each selected with care and matched to your style and budget.</div>
-        </div>
-        <span class="service-arrow">→</span>
-      </div>
-      <div class="service-item">
-        <span class="service-num">03</span>
-        <div class="service-body">
-          <div class="service-name">Flights & Class of Service</div>
-          <div class="service-desc">Economy to private aviation, we manage bookings, loyalty program strategy, preferred seats, and routing for the smoothest journey possible.</div>
-        </div>
-        <span class="service-arrow">→</span>
-      </div>
-      <div class="service-item">
-        <span class="service-num">04</span>
-        <div class="service-body">
-          <div class="service-name">Experiences & Excursions</div>
-          <div class="service-desc">Exclusive access to culinary tours, private guides, wildlife safaris, yacht charters, and once-in-a-lifetime encounters around the globe.</div>
-        </div>
-        <span class="service-arrow">→</span>
-      </div>
-      <div class="service-item">
-        <span class="service-num">05</span>
-        <div class="service-body">
-          <div class="service-name">Ground Transfers & Logistics</div>
-          <div class="service-desc">Private drivers, airport transfers, train passes, and every detail in between — handled with care so you can focus on the experience.</div>
-        </div>
-        <span class="service-arrow">→</span>
-      </div>
-      <div class="service-item">
-        <span class="service-num">06</span>
-        <div class="service-body">
-          <div class="service-name">Special Occasion Design</div>
-          <div class="service-desc">Honeymoons, proposals, milestone birthdays, anniversaries — we orchestrate the personal touches that transform a trip into a life event.</div>
-        </div>
-        <span class="service-arrow">→</span>
-      </div>
-      <div class="service-item">
-        <span class="service-num">07</span>
-        <div class="service-body">
-          <div class="service-name">Winter Sport & Ski Travel</div>
-          <div class="service-desc">From the European Alps to world-class North American resorts — we handle ski-in/ski-out accommodations, lift passes, equipment rentals, and resort transfers so you can focus on the mountain.</div>
-        </div>
-        <span class="service-arrow">→</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ── HOW IT WORKS ── -->
-<section style="padding: 100px 0; background: var(--warm-white);">
-  <div class="section-inner">
-    <div class="reveal" style="text-align: center; margin-bottom: 64px;">
-      <p class="eyebrow">The Process</p>
-      <h2 class="display-heading">How it <em>works</em></h2>
-      <div class="section-rule" style="margin: 22px auto;"></div>
-      <p class="body-text" style="margin: 0 auto;">From your first message to your first day away, here is exactly what working with Boundless Pursuit looks like.</p>
-    </div>
-    <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 2px; position: relative;">
-
-      <div class="reveal" style="transition-delay:0.05s; background: white; padding: 36px 24px; border-top: 3px solid var(--gold); text-align: center; position: relative;">
-        <div style="font-family: 'Cormorant Garamond', serif; font-size: 42px; font-weight: 300; color: var(--gold); opacity: 0.4; line-height: 1; margin-bottom: 16px;">01</div>
-        <div style="width: 44px; height: 44px; background: var(--navy); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 18px;">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-        </div>
-        <div style="font-family: 'Cormorant Garamond', serif; font-size: 20px; color: var(--navy); margin-bottom: 10px; font-weight: 400;">Discovery</div>
-        <p style="font-size: 13px; color: var(--muted); line-height: 1.75; font-weight: 300;">We learn about you, your travel style, and your dream trip through a personal conversation.</p>
-      </div>
-
-      <div class="reveal" style="transition-delay:0.1s; background: white; padding: 36px 24px; border-top: 3px solid var(--gold); text-align: center;">
-        <div style="font-family: 'Cormorant Garamond', serif; font-size: 42px; font-weight: 300; color: var(--gold); opacity: 0.4; line-height: 1; margin-bottom: 16px;">02</div>
-        <div style="width: 44px; height: 44px; background: var(--navy); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 18px;">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="1.5"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-        </div>
-        <div style="font-family: 'Cormorant Garamond', serif; font-size: 20px; color: var(--navy); margin-bottom: 10px; font-weight: 400;">Design</div>
-        <p style="font-size: 13px; color: var(--muted); line-height: 1.75; font-weight: 300;">We craft a personalized itinerary built entirely around your vision, preferences, and budget.</p>
-      </div>
-
-      <div class="reveal" style="transition-delay:0.15s; background: white; padding: 36px 24px; border-top: 3px solid var(--gold); text-align: center;">
-        <div style="font-family: 'Cormorant Garamond', serif; font-size: 42px; font-weight: 300; color: var(--gold); opacity: 0.4; line-height: 1; margin-bottom: 16px;">03</div>
-        <div style="width: 44px; height: 44px; background: var(--navy); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 18px;">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-        </div>
-        <div style="font-family: 'Cormorant Garamond', serif; font-size: 20px; color: var(--navy); margin-bottom: 10px; font-weight: 400;">Refine</div>
-        <p style="font-size: 13px; color: var(--muted); line-height: 1.75; font-weight: 300;">We fine-tune every detail together until the plan feels exactly right and truly yours.</p>
-      </div>
-
-      <div class="reveal" style="transition-delay:0.2s; background: white; padding: 36px 24px; border-top: 3px solid var(--gold); text-align: center;">
-        <div style="font-family: 'Cormorant Garamond', serif; font-size: 42px; font-weight: 300; color: var(--gold); opacity: 0.4; line-height: 1; margin-bottom: 16px;">04</div>
-        <div style="width: 44px; height: 44px; background: var(--navy); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 18px;">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
-        </div>
-        <div style="font-family: 'Cormorant Garamond', serif; font-size: 20px; color: var(--navy); margin-bottom: 10px; font-weight: 400;">Book</div>
-        <p style="font-size: 13px; color: var(--muted); line-height: 1.75; font-weight: 300;">We secure all reservations, curate your experiences, and manage every detail along the way.</p>
-      </div>
-
-      <div class="reveal" style="transition-delay:0.25s; background: var(--navy); padding: 36px 24px; border-top: 3px solid var(--gold); text-align: center;">
-        <div style="font-family: 'Cormorant Garamond', serif; font-size: 42px; font-weight: 300; color: var(--gold); opacity: 0.5; line-height: 1; margin-bottom: 16px;">05</div>
-        <div style="width: 44px; height: 44px; background: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 18px;">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1b2a4a" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-        </div>
-        <div style="font-family: 'Cormorant Garamond', serif; font-size: 20px; color: var(--parchment); margin-bottom: 10px; font-weight: 400;">Travel</div>
-        <p style="font-size: 13px; color: rgba(242,235,224,0.65); line-height: 1.75; font-weight: 300;">You go, we are here. Enjoy every moment knowing support is just a message away.</p>
-      </div>
-
-    </div>
-    <div class="reveal" style="text-align:center; margin-top: 48px;">
-      <a href="HTML-travel-intake-form.html" class="btn-primary">Share Your Travel Vision</a>
-    </div>
-  </div>
-</section>
-
-<!-- ── DESTINATIONS ── -->
-<section class="destinations" id="destinations">
-  <div class="section-inner">
-    <div class="dest-header reveal">
-      <p class="eyebrow">Where We'll Take You</p>
-      <h2 class="display-heading" style="color:var(--parchment);">The world, <em>curated</em></h2>
-      <div class="section-rule"></div>
-      <p class="body-text">Through our global network of trusted partners and suppliers, we can craft journeys across every corner of the world. Below are just a few of the regions we're most excited to explore with you — though we'll gladly take you anywhere the map leads.</p>
-    </div>
-    <div class="dest-grid reveal" style="transition-delay:0.15s;">
-      <div class="dest-card">
-        <div class="dest-region">Europe</div>
-        <div class="dest-name">Amalfi Coast & Italian Riviera</div>
-        <div class="dest-note">Sun-drenched cliffs, ancient villages, world-class cuisine</div>
-      </div>
-      <div class="dest-card">
-        <div class="dest-region">Asia Pacific</div>
-        <div class="dest-name">Japan & Southeast Asia</div>
-        <div class="dest-note">Cultural depth, serene temples, vibrant city life</div>
-      </div>
-      <div class="dest-card">
-        <div class="dest-region">Africa</div>
-        <div class="dest-name">Safari & East Africa</div>
-        <div class="dest-note">Wildlife encounters, open skies, conservation lodges</div>
-      </div>
-      <div class="dest-card">
-        <div class="dest-region">Americas</div>
-        <div class="dest-name">Patagonia & South America</div>
-        <div class="dest-note">Glaciers, rainforests, ancient civilizations</div>
-      </div>
-      <div class="dest-card">
-        <div class="dest-region">Middle East</div>
-        <div class="dest-name">Jordan & the Gulf</div>
-        <div class="dest-note">Desert wonders, ancient ruins, modern luxury</div>
-      </div>
-      <div class="dest-card">
-        <div class="dest-region">Oceania</div>
-        <div class="dest-name">New Zealand & The Pacific</div>
-        <div class="dest-note">Breathtaking landscapes, island retreats, adventure awaits</div>
-      </div>
-      <div class="dest-card">
-        <div class="dest-region">Caribbean</div>
-        <div class="dest-name">Private Islands & Resorts</div>
-        <div class="dest-note">Turquoise waters, seclusion, effortless luxury</div>
-      </div>
-      <div class="dest-card">
-        <div class="dest-region">Alps & Mountain Resorts</div>
-        <div class="dest-name">European Alps & Ski Country</div>
-        <div class="dest-note">Powder runs, alpine lodges, world-class skiing & après-ski culture</div>
-      </div>
-      <div class="dest-card" style="display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;">
-        <div style="font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--parchment);opacity:0.6;">Your dream destination</div>
-        <a href="HTML-travel-intake-form.html" style="font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(201,168,76,0.4);padding-bottom:2px;">Tell us where →</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ── WHY US ── -->
-<section class="promise" id="why-us">
-  <div class="section-inner">
-    <div class="promise-grid">
-      <div class="reveal">
-        <p class="eyebrow">Why Boundless Pursuit</p>
-        <h2 class="display-heading">Travel the way it <em>should feel</em></h2>
+    <!-- Destination -->
+    <div class="section" id="s1">
+      <div class="section-header">
+        <h2 class="section-title">Where Do You Want <em>to Go?</em></h2>
         <div class="section-rule"></div>
-        <div class="promise-points">
-          <div class="promise-point">
-            <div><div class="pp-dot"></div></div>
-            <div>
-              <div class="pp-title">Warm, trusted relationships</div>
-              <p class="pp-text">Our clients book through relationships, not algorithms. We invest in truly knowing you — your travel style, your preferences, and what makes a trip feel like yours — so every journey gets better over time.</p>
-            </div>
-          </div>
-          <div class="promise-point">
-            <div><div class="pp-dot"></div></div>
-            <div>
-              <div class="pp-title">Virtuoso membership benefits</div>
-              <p class="pp-text">Through our Virtuoso membership, we layer exclusive hotel perks, room upgrades, resort credits, and preferred partner value directly into your booking — at no extra cost to you.</p>
-            </div>
-          </div>
-          <div class="promise-point">
-            <div><div class="pp-dot"></div></div>
-            <div>
-              <div class="pp-title">Credit card stacking expertise</div>
-              <p class="pp-text">We help you get the most from your premium travel cards — Chase Sapphire Reserve, Venture X, Amex, and more — layering points, perks, and Virtuoso benefits to maximize the value of every dollar you spend.</p>
-            </div>
-          </div>
-          <div class="promise-point">
-            <div><div class="pp-dot"></div></div>
-            <div>
-              <div class="pp-title">Passion-led, purpose-driven</div>
-              <p class="pp-text">Our recommendations come from lived experience, genuine curiosity, and a deep belief that the right journey — planned with care — can change the way you see the world.</p>
-            </div>
-          </div>
+      </div>
+      <p class="section-hint">Be as specific or as open as you'd like — a dream destination, a region, or "surprise me."</p>
+      <div class="field-group">
+        <label class="field-label">Destination(s) or Region(s)</label>
+        <input type="text" name="destination" placeholder="e.g. Amalfi Coast, Southeast Asia, Iceland…">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Destination Flexibility</label>
+        <div class="pill-grid">
+          <div class="pill-option"><input type="radio" name="dest_flex" id="df1" value="specific"><label class="pill-label" for="df1">Specific destination in mind</label></div>
+          <div class="pill-option"><input type="radio" name="dest_flex" id="df2" value="open_region"><label class="pill-label" for="df2">Open to suggestions in a region</label></div>
+          <div class="pill-option"><input type="radio" name="dest_flex" id="df3" value="fully_open"><label class="pill-label" for="df3">Fully open — surprise me</label></div>
         </div>
       </div>
-      <div class="reveal" style="transition-delay:0.15s;">
-        <div class="stats">
-          <div class="stat-box">
-            <div class="stat-num" style="font-size:28px; padding-top:8px;">Virtuoso</div>
-            <div class="stat-label">Affiliated Member</div>
-          </div>
-          <div class="stat-box">
-            <div class="stat-num" style="font-size:28px; padding-top:8px;">Bespoke</div>
-            <div class="stat-label">Travel Design</div>
-          </div>
-          <div class="stat-box">
-            <div class="stat-num" style="font-size:28px; padding-top:8px;">Global</div>
-            <div class="stat-label">Preferred Partners</div>
-          </div>
-          <div class="stat-box">
-            <div class="stat-num" style="font-size:28px; padding-top:8px;">Concierge</div>
-            <div class="stat-label">Level Support</div>
-          </div>
-        </div>
+      <div class="field-group">
+        <label class="field-label">Anything to Avoid?</label>
+        <input type="text" name="avoid" placeholder="Countries, climates, or experiences you'd prefer not to encounter">
       </div>
     </div>
-  </div>
-</section>
 
-<!-- ── TESTIMONIALS ── -->
-<section class="testimonials" id="testimonials">
-  <div class="section-inner">
-    <div class="test-header reveal">
-      <p class="eyebrow">Client Stories</p>
-      <h2 class="display-heading">Words from those <em>who've pursued</em></h2>
-      <div class="section-rule"></div>
-    </div>
-    <div class="test-grid" style="grid-template-columns: 1fr;">
-      <div class="test-card reveal" style="text-align:center; padding: 60px 48px; border-top: 2px solid var(--gold); max-width: 680px; margin: 0 auto;">
-        <div style="font-size: 32px; color: var(--gold); margin-bottom: 24px;">✦</div>
-        <p class="test-quote" style="font-size: 22px; line-height: 1.7; color: var(--navy);">"Our story is just beginning and so is yours. Be among the first to experience Boundless Pursuit."</p>
-        <div class="test-divider" style="margin: 24px auto;"></div>
-        <p style="font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted);">Your adventure awaits</p>
-      </div>
-    </div>
-  </div>
-</section>
+    <hr class="divider">
 
-<!-- ── CTA BANNER ── -->
-<section class="cta-banner">
-  <div class="section-inner">
-    <div class="reveal">
-      <p class="eyebrow" style="color:var(--gold-light);">Ready to Begin?</p>
-      <h2 class="display-heading" style="color:var(--parchment);">Your next great story <em>starts here</em></h2>
-      <div class="section-rule"></div>
-      <p class="body-text" style="color:rgba(242,235,224,0.65);margin:0 auto 40px;">Complete our travel questionnaire and a specialist will be in touch within 48 hours to begin crafting your journey.</p>
-      <a href="HTML-travel-intake-form.html" class="btn-primary" style="border-color:var(--gold);background:var(--gold);color:var(--navy);">Share Your Travel Vision</a>
-    </div>
-  </div>
-</section>
-
-<!-- ── CONTACT ── -->
-<section class="contact" id="contact">
-  <div class="section-inner">
-    <div class="contact-grid">
-      <div class="reveal">
-        <p class="eyebrow">Get in Touch</p>
-        <h2 class="display-heading">We'd love to hear <em>from you</em></h2>
+    <!-- Travel Experience -->
+    <div class="section" id="s2">
+      <div class="section-header">
+        <h2 class="section-title">Your Travel <em>Experience</em></h2>
         <div class="section-rule"></div>
-        <p class="body-text" style="margin-bottom:40px;">Whether you have a dream destination, a question, or simply aren't sure where to start — reach out. Every great journey begins with a conversation.</p>
-
-        <div class="contact-detail">
-          <div>
-            <div class="cd-label">Email</div>
-            <div class="cd-value"><a href="mailto:travel@theboundlesspursuit.com">travel@theboundlesspursuit.com</a></div>
-          </div>
-        </div>
-
-        <div class="contact-detail">
-          <div>
-            <div class="cd-label">Response Time</div>
-            <div class="cd-value" style="font-size:16px;">Within 48 hours</div>
-          </div>
-        </div>
-
       </div>
-
-      <div class="reveal" style="transition-delay:0.15s;">
-        <form id="contactForm" onsubmit="handleContactForm(event)">
-
-          <div class="form-row">
-            <div class="form-group">
-              <label class="form-label">First Name</label>
-              <input type="text" id="cf-first" class="form-input" placeholder="Your first name" required>
-            </div>
-            <div class="form-group">
-              <label class="form-label">Last Name</label>
-              <input type="text" id="cf-last" class="form-input" placeholder="Your last name" required>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Email Address</label>
-            <input type="email" id="cf-email" class="form-input" placeholder="your@email.com" required>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Dream Destination or Trip Type</label>
-            <input type="text" id="cf-destination" class="form-input" placeholder="e.g. Italy, Safari, Honeymoon, Family Adventure…">
-          </div>
-          <div class="form-group">
-            <label class="form-label">Tell Us More</label>
-            <textarea id="cf-message" class="form-input" placeholder="Share your travel wishes, questions, or anything you'd like us to know. There are no wrong answers here."></textarea>
-          </div>
-          <button type="submit" class="form-submit" id="cf-submit">Send My Inquiry</button>
-        </form>
-        <div class="form-success" id="formSuccess">
-          <div class="fs-icon">✦</div>
-          <h4>Message Received</h4>
-          <p>Thank you for reaching out. We will be in touch within 48 hours to begin planning your journey.</p>
+      <div class="field-group">
+        <label class="field-label">How seasoned a traveler are you?</label>
+        <div class="pill-grid">
+          <div class="pill-option"><input type="radio" name="experience" id="ex1" value="first_time"><label class="pill-label" for="ex1">First-time traveler</label></div>
+          <div class="pill-option"><input type="radio" name="experience" id="ex2" value="occasional"><label class="pill-label" for="ex2">Occasional — a few trips</label></div>
+          <div class="pill-option"><input type="radio" name="experience" id="ex3" value="regular"><label class="pill-label" for="ex3">Regular traveler</label></div>
+          <div class="pill-option"><input type="radio" name="experience" id="ex4" value="seasoned"><label class="pill-label" for="ex4">Seasoned — I travel constantly</label></div>
+        </div>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Regions you've already visited</label>
+        <textarea name="visited" placeholder="e.g. Western Europe, Caribbean, Japan — anywhere you've been before"></textarea>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Do you prefer familiar or new ground?</label>
+        <div class="pill-grid">
+          <div class="pill-option"><input type="radio" name="familiar" id="fam1" value="revisit"><label class="pill-label" for="fam1">I love returning to favorites</label></div>
+          <div class="pill-option"><input type="radio" name="familiar" id="fam2" value="mix"><label class="pill-label" for="fam2">A mix of both</label></div>
+          <div class="pill-option"><input type="radio" name="familiar" id="fam3" value="new"><label class="pill-label" for="fam3">Always somewhere new</label></div>
         </div>
       </div>
     </div>
+
+    <hr class="divider">
+
+    <!-- Travelers -->
+    <div class="section" id="s3">
+      <div class="section-header">
+        <h2 class="section-title">Who Is <em>Traveling?</em></h2>
+        <div class="section-rule"></div>
+      </div>
+      <div class="grid-3">
+        <div class="field-group">
+          <label class="field-label">Adults (18+)</label>
+          <input type="number" name="adults" min="1" max="30" placeholder="1">
+        </div>
+        <div class="field-group">
+          <label class="field-label">Children (under 18)</label>
+          <input type="number" name="children" min="0" max="20" placeholder="0">
+        </div>
+        <div class="field-group">
+          <label class="field-label">Infants (under 2)</label>
+          <input type="number" name="infants" min="0" max="10" placeholder="0">
+        </div>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Travel Group Type</label>
+        <div class="pill-grid">
+          <div class="pill-option"><input type="radio" name="group_type" id="gt1" value="solo"><label class="pill-label" for="gt1">Solo</label></div>
+          <div class="pill-option"><input type="radio" name="group_type" id="gt2" value="couple"><label class="pill-label" for="gt2">Couple</label></div>
+          <div class="pill-option"><input type="radio" name="group_type" id="gt3" value="family"><label class="pill-label" for="gt3">Family</label></div>
+          <div class="pill-option"><input type="radio" name="group_type" id="gt4" value="friends"><label class="pill-label" for="gt4">Friends Group</label></div>
+          <div class="pill-option"><input type="radio" name="group_type" id="gt5" value="corporate"><label class="pill-label" for="gt5">Corporate / Team</label></div>
+        </div>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Children's Ages (if applicable)</label>
+        <input type="text" name="children_ages" placeholder="e.g. 4, 9, 14">
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- Dates -->
+    <div class="section" id="s4">
+      <div class="section-header">
+        <h2 class="section-title">Travel <em>Dates</em></h2>
+        <div class="section-rule"></div>
+      </div>
+      <div class="grid-2">
+        <div class="field-group">
+          <label class="field-label">Earliest Departure</label>
+          <input type="date" name="date_from">
+        </div>
+        <div class="field-group">
+          <label class="field-label">Latest Return</label>
+          <input type="date" name="date_to">
+        </div>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Trip Duration (nights)</label>
+        <div class="range-wrap">
+          <div class="range-value" id="durationDisplay">7 nights</div>
+          <input type="range" name="duration" min="1" max="30" value="7" id="durationRange">
+          <div class="range-labels"><span>1 night</span><span>2 weeks</span><span>30 nights</span></div>
+        </div>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Date Flexibility</label>
+        <div class="pill-grid">
+          <div class="pill-option"><input type="radio" name="date_flex" id="dfl1" value="fixed"><label class="pill-label" for="dfl1">Fixed — exact dates only</label></div>
+          <div class="pill-option"><input type="radio" name="date_flex" id="dfl2" value="slight"><label class="pill-label" for="dfl2">±3 days flexibility</label></div>
+          <div class="pill-option"><input type="radio" name="date_flex" id="dfl3" value="flexible"><label class="pill-label" for="dfl3">Flexible within the month</label></div>
+          <div class="pill-option"><input type="radio" name="date_flex" id="dfl4" value="very_flex"><label class="pill-label" for="dfl4">Very flexible — best value wins</label></div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- Budget -->
+    <div class="section" id="s5">
+      <div class="section-header">
+        <h2 class="section-title">Budget & <em>Accommodations</em></h2>
+        <div class="section-rule"></div>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Accommodation Budget (per night, per room)</label>
+        <div class="range-wrap">
+          <div class="range-value" id="budgetDisplay">$300 / night</div>
+          <input type="range" name="budget" min="50" max="2000" step="25" value="300" id="budgetRange">
+          <div class="range-labels"><span>$50</span><span>$1,000</span><span>$2,000+</span></div>
+        </div>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Accommodation Style</label>
+        <div class="pill-grid">
+          <div class="pill-option"><input type="checkbox" name="accom_style" id="as1" value="budget_hotel"><label class="pill-label" for="as1">Budget / Hostel</label></div>
+          <div class="pill-option"><input type="checkbox" name="accom_style" id="as2" value="boutique"><label class="pill-label" for="as2">Boutique Hotel</label></div>
+          <div class="pill-option"><input type="checkbox" name="accom_style" id="as3" value="resort"><label class="pill-label" for="as3">Resort</label></div>
+          <div class="pill-option"><input type="checkbox" name="accom_style" id="as4" value="luxury"><label class="pill-label" for="as4">Luxury / 5-star</label></div>
+          <div class="pill-option"><input type="checkbox" name="accom_style" id="as5" value="villa"><label class="pill-label" for="as5">Private Villa / Rental</label></div>
+          <div class="pill-option"><input type="checkbox" name="accom_style" id="as6" value="eco"><label class="pill-label" for="as6">Eco Lodge / Glamping</label></div>
+          <div class="pill-option"><input type="checkbox" name="accom_style" id="as7" value="unique"><label class="pill-label" for="as7">Unique / Experiential</label></div>
+        </div>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Overall Trip Budget (all-in, optional)</label>
+        <input type="text" name="total_budget" placeholder="e.g. $5,000 per person or $15,000 total">
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- Class of Service -->
+    <div class="section" id="s6">
+      <div class="section-header">
+        <h2 class="section-title">Class of <em>Service</em></h2>
+        <div class="section-rule"></div>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Preferred Flight Class</label>
+        <div class="pill-grid">
+          <div class="pill-option"><input type="radio" name="flight_class" id="fc1" value="economy"><label class="pill-label" for="fc1">Economy</label></div>
+          <div class="pill-option"><input type="radio" name="flight_class" id="fc2" value="premium_eco"><label class="pill-label" for="fc2">Premium Economy</label></div>
+          <div class="pill-option"><input type="radio" name="flight_class" id="fc3" value="business"><label class="pill-label" for="fc3">Business Class</label></div>
+          <div class="pill-option"><input type="radio" name="flight_class" id="fc4" value="first"><label class="pill-label" for="fc4">First Class</label></div>
+          <div class="pill-option"><input type="radio" name="flight_class" id="fc5" value="private"><label class="pill-label" for="fc5">Private Aviation</label></div>
+        </div>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Airline Preferences or Loyalty Programs</label>
+        <input type="text" name="airline_pref" placeholder="e.g. Delta SkyMiles, American AAdvantage, no preference">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Any Seat Preferences?</label>
+        <input type="text" name="seat_pref" placeholder="e.g. window, aisle, bulk-head, extra legroom">
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- Transportation -->
+    <div class="section" id="s7">
+      <div class="section-header">
+        <h2 class="section-title">On-the-Ground <em>Transportation</em></h2>
+        <div class="section-rule"></div>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Transportation Needed</label>
+        <div class="pill-grid">
+          <div class="pill-option"><input type="checkbox" name="transport" id="tr1" value="rental_car"><label class="pill-label" for="tr1">Rental Car</label></div>
+          <div class="pill-option"><input type="checkbox" name="transport" id="tr2" value="private_driver"><label class="pill-label" for="tr2">Private Driver / Chauffeur</label></div>
+          <div class="pill-option"><input type="checkbox" name="transport" id="tr3" value="transfers"><label class="pill-label" for="tr3">Airport Transfers</label></div>
+          <div class="pill-option"><input type="checkbox" name="transport" id="tr4" value="train"><label class="pill-label" for="tr4">Train / Rail Passes</label></div>
+          <div class="pill-option"><input type="checkbox" name="transport" id="tr5" value="ferry"><label class="pill-label" for="tr5">Ferry / Water Taxi</label></div>
+          <div class="pill-option"><input type="checkbox" name="transport" id="tr6" value="helicopter"><label class="pill-label" for="tr6">Helicopter / Seaplane</label></div>
+          <div class="pill-option"><input type="checkbox" name="transport" id="tr7" value="none"><label class="pill-label" for="tr7">I'll arrange my own</label></div>
+        </div>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Notes on Transportation</label>
+        <textarea name="transport_notes" placeholder="Any specific needs — special license requirements, infant car seats, accessibility…"></textarea>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- Travel Style -->
+    <div class="section" id="s8">
+      <div class="section-header">
+        <h2 class="section-title">Your Travel <em>Style</em></h2>
+        <div class="section-rule"></div>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Travel Personality (select all that resonate)</label>
+        <div class="pill-grid">
+          <div class="pill-option"><input type="checkbox" name="style" id="st1" value="luxury"><label class="pill-label" for="st1">Luxury &amp; Indulgence</label></div>
+          <div class="pill-option"><input type="checkbox" name="style" id="st2" value="adventure"><label class="pill-label" for="st2">Adventure &amp; Outdoors</label></div>
+          <div class="pill-option"><input type="checkbox" name="style" id="st3" value="cultural"><label class="pill-label" for="st3">Cultural Immersion</label></div>
+          <div class="pill-option"><input type="checkbox" name="style" id="st4" value="relaxation"><label class="pill-label" for="st4">Rest &amp; Relaxation</label></div>
+          <div class="pill-option"><input type="checkbox" name="style" id="st5" value="foodie"><label class="pill-label" for="st5">Culinary &amp; Food-Focused</label></div>
+          <div class="pill-option"><input type="checkbox" name="style" id="st6" value="budget"><label class="pill-label" for="st6">Budget Conscious</label></div>
+          <div class="pill-option"><input type="checkbox" name="style" id="st7" value="wellness"><label class="pill-label" for="st7">Wellness &amp; Spa</label></div>
+          <div class="pill-option"><input type="checkbox" name="style" id="st8" value="nightlife"><label class="pill-label" for="st8">Nightlife &amp; Social</label></div>
+          <div class="pill-option"><input type="checkbox" name="style" id="st9" value="family"><label class="pill-label" for="st9">Family-Friendly</label></div>
+          <div class="pill-option"><input type="checkbox" name="style" id="st10" value="eco"><label class="pill-label" for="st10">Eco &amp; Sustainable</label></div>
+          <div class="pill-option"><input type="checkbox" name="style" id="st11" value="romance"><label class="pill-label" for="st11">Romantic</label></div>
+          <div class="pill-option"><input type="checkbox" name="style" id="st12" value="slow"><label class="pill-label" for="st12">Slow Travel</label></div>
+        </div>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Pace Preference</label>
+        <div class="range-wrap">
+          <div class="range-value" id="paceDisplay">Balanced</div>
+          <input type="range" name="pace" min="1" max="5" value="3" id="paceRange">
+          <div class="range-labels"><span>Slow &amp; leisurely</span><span></span><span>Action-packed</span></div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- Excursions -->
+    <div class="section" id="s9">
+      <div class="section-header">
+        <h2 class="section-title">Excursions & <em>Experiences</em></h2>
+        <div class="section-rule"></div>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Interested in Excursions?</label>
+        <div class="pill-grid">
+          <div class="pill-option"><input type="radio" name="excursions_yn" id="ey1" value="yes_plan"><label class="pill-label" for="ey1">Yes — please include them</label></div>
+          <div class="pill-option"><input type="radio" name="excursions_yn" id="ey2" value="yes_suggest"><label class="pill-label" for="ey2">Yes — suggest options</label></div>
+          <div class="pill-option"><input type="radio" name="excursions_yn" id="ey3" value="maybe"><label class="pill-label" for="ey3">Maybe — depends on what's available</label></div>
+          <div class="pill-option"><input type="radio" name="excursions_yn" id="ey4" value="no"><label class="pill-label" for="ey4">No — we prefer free time</label></div>
+        </div>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Types of Experiences (select all that interest you)</label>
+        <div class="pill-grid">
+          <div class="pill-option"><input type="checkbox" name="excursion_type" id="et1" value="hiking"><label class="pill-label" for="et1">Hiking &amp; Trekking</label></div>
+          <div class="pill-option"><input type="checkbox" name="excursion_type" id="et2" value="water"><label class="pill-label" for="et2">Water Sports &amp; Diving</label></div>
+          <div class="pill-option"><input type="checkbox" name="excursion_type" id="et3" value="wildlife"><label class="pill-label" for="et3">Wildlife &amp; Safari</label></div>
+          <div class="pill-option"><input type="checkbox" name="excursion_type" id="et4" value="cooking"><label class="pill-label" for="et4">Cooking &amp; Food Tours</label></div>
+          <div class="pill-option"><input type="checkbox" name="excursion_type" id="et5" value="history"><label class="pill-label" for="et5">History &amp; Architecture</label></div>
+          <div class="pill-option"><input type="checkbox" name="excursion_type" id="et6" value="art"><label class="pill-label" for="et6">Art &amp; Museums</label></div>
+          <div class="pill-option"><input type="checkbox" name="excursion_type" id="et7" value="extreme"><label class="pill-label" for="et7">Extreme Sports</label></div>
+          <div class="pill-option"><input type="checkbox" name="excursion_type" id="et8" value="spa"><label class="pill-label" for="et8">Spa &amp; Wellness</label></div>
+          <div class="pill-option"><input type="checkbox" name="excursion_type" id="et9" value="nightlife_exp"><label class="pill-label" for="et9">Local Nightlife</label></div>
+          <div class="pill-option"><input type="checkbox" name="excursion_type" id="et10" value="voluntourism"><label class="pill-label" for="et10">Voluntourism</label></div>
+          <div class="pill-option"><input type="checkbox" name="excursion_type" id="et11" value="photography"><label class="pill-label" for="et11">Photography Tours</label></div>
+          <div class="pill-option"><input type="checkbox" name="excursion_type" id="et12" value="cruises"><label class="pill-label" for="et12">Boat / Yacht Charters</label></div>
+        </div>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Physical Considerations or Limitations</label>
+        <textarea name="physical_limits" placeholder="e.g. moderate fitness, limited walking, no high altitude, wheelchair accessible needed, post-surgery recovery, traveling with elderly guests…"></textarea>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- Favorites / Personal -->
+    <div class="section" id="s10">
+      <div class="section-header">
+        <h2 class="section-title">What Makes a Trip <em>Unforgettable</em> for You?</h2>
+        <div class="section-rule"></div>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Your travel non-negotiables</label>
+        <textarea name="non_negotiables" placeholder="What must every great trip have for you? e.g. ocean views, private pools, local markets, incredible food, privacy, spontaneity…"></textarea>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Dietary Preferences or Food Style</label>
+        <div class="pill-grid">
+          <div class="pill-option"><input type="checkbox" name="dietary" id="di1" value="no_restriction"><label class="pill-label" for="di1">No restrictions</label></div>
+          <div class="pill-option"><input type="checkbox" name="dietary" id="di2" value="vegetarian"><label class="pill-label" for="di2">Vegetarian</label></div>
+          <div class="pill-option"><input type="checkbox" name="dietary" id="di3" value="vegan"><label class="pill-label" for="di3">Vegan</label></div>
+          <div class="pill-option"><input type="checkbox" name="dietary" id="di4" value="gluten_free"><label class="pill-label" for="di4">Gluten-free</label></div>
+          <div class="pill-option"><input type="checkbox" name="dietary" id="di5" value="halal"><label class="pill-label" for="di5">Halal</label></div>
+          <div class="pill-option"><input type="checkbox" name="dietary" id="di6" value="kosher"><label class="pill-label" for="di6">Kosher</label></div>
+          <div class="pill-option"><input type="checkbox" name="dietary" id="di7" value="allergies"><label class="pill-label" for="di7">Food allergies</label></div>
+        </div>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Special Occasions on This Trip?</label>
+        <div class="pill-grid">
+          <div class="pill-option"><input type="checkbox" name="occasion" id="oc1" value="honeymoon"><label class="pill-label" for="oc1">Honeymoon</label></div>
+          <div class="pill-option"><input type="checkbox" name="occasion" id="oc2" value="anniversary"><label class="pill-label" for="oc2">Anniversary</label></div>
+          <div class="pill-option"><input type="checkbox" name="occasion" id="oc3" value="birthday"><label class="pill-label" for="oc3">Birthday</label></div>
+          <div class="pill-option"><input type="checkbox" name="occasion" id="oc4" value="proposal"><label class="pill-label" for="oc4">Proposal</label></div>
+          <div class="pill-option"><input type="checkbox" name="occasion" id="oc5" value="graduation"><label class="pill-label" for="oc5">Graduation</label></div>
+          <div class="pill-option"><input type="checkbox" name="occasion" id="oc6" value="retirement"><label class="pill-label" for="oc6">Retirement</label></div>
+          <div class="pill-option"><input type="checkbox" name="occasion" id="oc7" value="leisure"><label class="pill-label" for="oc7">Leisure</label></div>
+        </div>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Rate Your Overall Service Expectation</label>
+        <div class="star-rating">
+          <input type="radio" name="service_rating" id="sr5" value="5"><label for="sr5">★</label>
+          <input type="radio" name="service_rating" id="sr4" value="4"><label for="sr4">★</label>
+          <input type="radio" name="service_rating" id="sr3" value="3"><label for="sr3">★</label>
+          <input type="radio" name="service_rating" id="sr2" value="2"><label for="sr2">★</label>
+          <input type="radio" name="service_rating" id="sr1" value="1"><label for="sr1">★</label>
+        </div>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Anything Else We Should Know?</label>
+        <textarea name="additional" placeholder="Share anything else — past trips you loved (or hated), a dream you want us to bring to life, or any questions for us…" style="min-height:130px;"></textarea>
+      </div>
+    </div>
+
+    <div class="submit-area">
+      <p class="submit-note">Boundless Pursuit will review your preferences within 48 hours.</p>
+      <button type="submit" class="btn-submit">Submit My Travel Questionnaire</button>
+      <p class="footer-tagline">Explore More &nbsp;·&nbsp; Connect Deeper &nbsp;·&nbsp; Remember Forever</p>
+    </div>
+
+  </form>
+</main>
+
+<!-- Success Overlay -->
+<div class="success-overlay" id="successOverlay">
+  <div class="success-card">
+    <div class="success-icon">✦</div>
+    <h2 class="success-title">Questionnaire Received</h2>
+    <div class="success-rule"></div>
+    <p class="success-msg">Thank you for sharing your travel vision. A specialist will be in touch within 24 hours to begin crafting your itinerary.</p>
   </div>
-</section>
-
-<!-- ── FOOTER ── -->
-<footer style="position:relative;">
-  <div class="footer-inner">
-
-    <!-- Watermark compass logo — absolute positioned, no layout impact -->
-    <div id="footerCompass" style="position:absolute; top: 20px; right: 12px; opacity: 0.05; pointer-events:none; z-index:0; user-select:none;">
-      <svg width="350" height="350" viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="160" cy="160" r="148" fill="none" stroke="#f2ebe0" stroke-width="1.5"/>
-        <circle cx="160" cy="160" r="140" fill="none" stroke="#f2ebe0" stroke-width="0.5"/>
-        <circle cx="160" cy="160" r="118" fill="none" stroke="#f2ebe0" stroke-width="0.6"/>
-        <line x1="160" y1="12" x2="160" y2="308" stroke="#c9a84c" stroke-width="0.8"/>
-        <line x1="12" y1="160" x2="308" y2="160" stroke="#c9a84c" stroke-width="0.8"/>
-        <line x1="51" y1="51" x2="269" y2="269" stroke="#f2ebe0" stroke-width="0.5"/>
-        <line x1="269" y1="51" x2="51" y2="269" stroke="#f2ebe0" stroke-width="0.5"/>
-        <polygon points="160,14 166,142 160,128 154,142" fill="#c9a84c"/>
-        <polygon points="160,306 166,178 160,192 154,178" fill="#f2ebe0"/>
-        <polygon points="14,160 142,154 128,160 142,166" fill="#f2ebe0"/>
-        <polygon points="306,160 178,154 192,160 178,166" fill="#f2ebe0"/>
-        <text x="160" y="8" text-anchor="middle" font-size="14" fill="#c9a84c" font-family="'Cormorant Garamond',serif" font-weight="600">N</text>
-        <text x="160" y="318" text-anchor="middle" font-size="12" fill="#f2ebe0" font-family="'Cormorant Garamond',serif">S</text>
-        <text x="7" y="164" text-anchor="middle" font-size="12" fill="#f2ebe0" font-family="'Cormorant Garamond',serif">W</text>
-        <text x="315" y="164" text-anchor="middle" font-size="12" fill="#f2ebe0" font-family="'Cormorant Garamond',serif">E</text>
-        <text x="148" y="178" text-anchor="middle" font-size="68" fill="#f2ebe0" font-family="'Cormorant Garamond',serif" font-weight="600">B</text>
-        <text x="176" y="186" text-anchor="middle" font-size="68" fill="#f2ebe0" font-family="'Cormorant Garamond',serif" font-weight="600">P</text>
-        <circle cx="160" cy="160" r="5" fill="none" stroke="#c9a84c" stroke-width="1.2"/>
-        <circle cx="160" cy="160" r="2" fill="#c9a84c"/>
-        <g transform="translate(160,306)">
-          <polygon points="0,-9 2,-3 8,-3 3,2 5,9 0,4.5 -5,9 -3,2 -8,-3 -2,-3" fill="#c9a84c"/>
-        </g>
-      </svg>
-    </div>
-
-    <div class="footer-top">
-      <div class="footer-brand-col">
-        <div class="footer-brand-name">Boundless Pursuit</div>
-        <div class="footer-tagline">Explore More · Connect Deeper · Remember Forever</div>
-        <p class="footer-desc">Travel consulting for the discerning traveler. We craft meaningful journeys wherever your curiosity takes you — with care, precision, and a deep love of the world.</p>
-      </div>
-      <div class="footer-col">
-        <h5>Navigate</h5>
-        <ul>
-          <li><a href="#vision">Our Vision</a></li>
-          <li><a href="our-story.html">Meet Us</a></li>
-          <li><a href="#services">Services</a></li>
-          <li><a href="#destinations">Destinations</a></li>
-          <li><a href="faq.html">FAQ</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h5>Services</h5>
-        <ul>
-          <li><a href="#">Bespoke Itineraries</a></li>
-          <li><a href="#">Accommodation Curation</a></li>
-          <li><a href="#">Flight Management</a></li>
-          <li><a href="#">Excursions</a></li>
-          <li><a href="#">Special Occasions</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h5>Contact</h5>
-        <ul>
-          <li><a href="mailto:travel@theboundlesspursuit.com">travel@theboundlesspursuit.com</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <span class="footer-copy">© 2026 Boundless Pursuit. All rights reserved.</span>
-      <div class="footer-sub-links">
-        <a href="#">Privacy Policy</a>
-        <a href="#">Terms of Service</a>
-        <a href="#">Accessibility</a>
-      </div>
-    </div>
-  </div>
-</footer>
+</div>
 
 <script>
-  // Nav toggle
-  document.getElementById('navToggle').addEventListener('click', function() {
-    document.getElementById('navLinks').classList.toggle('open');
+  // Progress tracking
+  function updateProgress() {
+    const form = document.getElementById('intakeForm');
+    const inputs = form.querySelectorAll('input:not([type="range"]), select, textarea');
+    let filled = 0;
+    inputs.forEach(inp => {
+      if (inp.type === 'checkbox' || inp.type === 'radio') {
+        if (inp.checked) filled++;
+      } else if (inp.value && inp.value.trim() !== '') {
+        filled++;
+      }
+    });
+    // Count total "answerable" items (radios count as group)
+    const radioGroups = new Set([...form.querySelectorAll('input[type="radio"]')].map(r => r.name));
+    const checkboxes = form.querySelectorAll('input[type="checkbox"]');
+    const texts = form.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"], input[type="number"], input[type="date"], select, textarea');
+    const total = radioGroups.size + checkboxes.length + texts.length;
+    let pct = Math.min(100, Math.round((filled / total) * 100));
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('progressPct').textContent = pct + '%';
+  }
+  document.getElementById('intakeForm').addEventListener('change', updateProgress);
+  document.getElementById('intakeForm').addEventListener('input', updateProgress);
+
+  // Duration slider
+  const durRange = document.getElementById('durationRange');
+  const durDisplay = document.getElementById('durationDisplay');
+  durRange.addEventListener('input', () => {
+    const v = durRange.value;
+    durDisplay.textContent = v == 1 ? '1 night' : v + ' nights';
   });
 
-  // Close nav on link click (mobile)
-  document.querySelectorAll('.nav-links a').forEach(a => {
-    a.addEventListener('click', () => document.getElementById('navLinks').classList.remove('open'));
+  // Budget slider
+  const budRange = document.getElementById('budgetRange');
+  const budDisplay = document.getElementById('budgetDisplay');
+  budRange.addEventListener('input', () => {
+    const v = parseInt(budRange.value);
+    budDisplay.textContent = v >= 2000 ? '$2,000+ / night' : '$' + v.toLocaleString() + ' / night';
+  });
+
+  // Pace slider
+  const paceRange = document.getElementById('paceRange');
+  const paceDisplay = document.getElementById('paceDisplay');
+  const paceLabels = ['', 'Very relaxed', 'Leisurely', 'Balanced', 'Active', 'Packed itinerary'];
+  paceRange.addEventListener('input', () => {
+    paceDisplay.textContent = paceLabels[paceRange.value];
   });
 
   // Scroll reveal
-  const revealObserver = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revealObserver.unobserve(e.target); } });
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
   }, { threshold: 0.1 });
-  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
-
-  // Contact form — sends via mailto to Google Workspace inbox
-  function handleContactForm(e) {
-    e.preventDefault();
-    const btn = document.getElementById('cf-submit');
-    btn.textContent = 'Sending…';
-    btn.disabled = true;
-
-    const first    = document.getElementById('cf-first').value.trim();
-    const last     = document.getElementById('cf-last').value.trim();
-    const email    = document.getElementById('cf-email').value.trim();
-    const dest     = document.getElementById('cf-destination').value.trim();
-    const message  = document.getElementById('cf-message').value.trim();
-
-    const subject  = encodeURIComponent('New Inquiry from ' + first + ' ' + last + ' — Boundless Pursuit');
-    const body     = encodeURIComponent(
-      'Name: ' + first + ' ' + last + '\n' +
-      'Email: ' + email + '\n' +
-      'Dream Destination / Trip Type: ' + (dest || 'Not specified') + '\n\n' +
-      'Message:\n' + (message || 'No message provided.')
-    );
-
-    // Open the visitor's email client addressed to your Workspace inbox
-    window.location.href = 'mailto:travel@theboundlesspursuit.com?subject=' + subject + '&body=' + body;
-
-    // Show success message after a brief delay
-    setTimeout(function() {
-      document.getElementById('contactForm').style.display = 'none';
-      document.getElementById('formSuccess').style.display = 'block';
-    }, 800);
-  }
-
-  // Smooth active nav
-  const sections = document.querySelectorAll('section[id], .about[id]');
-  const navLinks = document.querySelectorAll('.nav-links a');
-  window.addEventListener('scroll', () => {
-    let current = '';
-    sections.forEach(s => { if (window.scrollY >= s.offsetTop - 100) current = s.id; });
-    navLinks.forEach(a => {
-      a.style.color = a.getAttribute('href') === '#'+current ? 'var(--navy)' : '';
-    });
+  document.querySelectorAll('.section').forEach((s, i) => {
+    s.style.transitionDelay = (i * 0.05) + 's';
+    observer.observe(s);
   });
 
-  // ── FLIGHT PATH ANIMATION ──
-  (function() {
-    const paths = [
-      document.getElementById('route1'),
-      document.getElementById('route2'),
-      document.getElementById('route3'),
-      document.getElementById('route4'),
-    ];
-    const plane = document.getElementById('planeGroup');
-    const goldTrail = document.getElementById('goldTrail');
+  // Submit
+  document.getElementById('intakeForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const form = this;
+    const data = new FormData(form);
+    data.append('_subject', 'New Travel Questionnaire — Boundless Pursuit');
 
-    // The plane follows route1 as primary path, scroll-driven
-    const primaryPath = paths[0];
-    if (!primaryPath || !plane) return;
-
-    const totalLen = primaryPath.getTotalLength();
-
-    // Set up dashed animation on secondary routes (CSS offset animation)
-    paths.forEach((p, i) => {
-      if (!p) return;
-      const len = p.getTotalLength();
-      p.style.strokeDasharray = (i % 2 === 0) ? '9,8' : '7,9';
-      p.style.strokeDashoffset = '0';
-      // Animate the dash offset slowly for a living-map feel
-      const speed = [60, 80, 70, 90][i];
-      let offset = 0;
-      function animateDash() {
-        offset -= 0.3;
-        p.style.strokeDashoffset = offset;
-        requestAnimationFrame(animateDash);
+    fetch('https://formspree.io/f/xvzjwdko', {
+      method: 'POST',
+      body: data,
+      headers: { 'Accept': 'application/json' }
+    })
+    .then(response => {
+      if (response.ok) {
+        document.getElementById('successOverlay').classList.add('show');
+      } else {
+        alert('Something went wrong — please try again or email us at travel@theboundlesspursuit.com');
       }
-      animateDash();
+    })
+    .catch(() => {
+      alert('Something went wrong — please try again or email us at travel@theboundlesspursuit.com');
     });
-
-    // Plane follows scroll progress along primaryPath
-    function updatePlane() {
-      const scrollTop = window.scrollY || document.documentElement.scrollTop;
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const progress = Math.min(1, Math.max(0, scrollTop / docHeight));
-
-      const dist = progress * totalLen;
-      const pt = primaryPath.getPointAtLength(dist);
-
-      // Get tangent for rotation
-      const lookAhead = Math.min(dist + 12, totalLen);
-      const pt2 = primaryPath.getPointAtLength(lookAhead);
-      const angle = Math.atan2(pt2.y - pt.y, pt2.x - pt.x) * (180 / Math.PI) + 90;
-
-      plane.setAttribute('transform', `translate(${pt.x},${pt.y}) rotate(${angle})`);
-
-      // Fade in/out at edges
-      const fade = progress < 0.04 ? progress / 0.04 : progress > 0.96 ? (1 - progress) / 0.04 : 1;
-      plane.setAttribute('opacity', (0.22 * fade).toFixed(3));
-
-      // Gold trail: draw from start to current position
-      const trailStart = Math.max(0, dist - 180);
-      const trailPts = [];
-      const steps = 32;
-      for (let i = 0; i <= steps; i++) {
-        const d = trailStart + (dist - trailStart) * (i / steps);
-        const p = primaryPath.getPointAtLength(d);
-        trailPts.push(`${i === 0 ? 'M' : 'L'}${p.x.toFixed(1)},${p.y.toFixed(1)}`);
-      }
-      goldTrail.setAttribute('d', trailPts.join(' '));
-      goldTrail.setAttribute('opacity', (0.45 * fade).toFixed(3));
-    }
-
-    window.addEventListener('scroll', updatePlane, { passive: true });
-    updatePlane(); // init position
-  })();
-
-  // ── DRAGGABLE FOOTER COMPASS WATERMARK ──
-  (function() {
-    const el = document.getElementById('footerCompass');
-    if (!el) return;
-
-    let dragging = false, startX, startY, origLeft, origTop;
-
-    el.addEventListener('mousedown', function(e) {
-      dragging = true;
-      el.style.cursor = 'grabbing';
-      el.style.opacity = '0.12';
-      const rect = el.getBoundingClientRect();
-      const parentRect = el.offsetParent.getBoundingClientRect();
-      origLeft = rect.left - parentRect.left;
-      origTop = rect.top - parentRect.top;
-      startX = e.clientX;
-      startY = e.clientY;
-      el.style.left = origLeft + 'px';
-      el.style.right = 'auto';
-      e.preventDefault();
-    });
-
-    document.addEventListener('mousemove', function(e) {
-      if (!dragging) return;
-      const dx = e.clientX - startX;
-      const dy = e.clientY - startY;
-      el.style.left = (origLeft + dx) + 'px';
-      el.style.top = (origTop + dy) + 'px';
-    });
-
-    document.addEventListener('mouseup', function() {
-      if (!dragging) return;
-      dragging = false;
-      el.style.cursor = 'grab';
-      el.style.opacity = '0.05';
-    });
-
-    el.addEventListener('touchstart', function(e) {
-      const touch = e.touches[0];
-      dragging = true;
-      const rect = el.getBoundingClientRect();
-      const parentRect = el.offsetParent.getBoundingClientRect();
-      origLeft = rect.left - parentRect.left;
-      origTop = rect.top - parentRect.top;
-      startX = touch.clientX;
-      startY = touch.clientY;
-      el.style.left = origLeft + 'px';
-      el.style.right = 'auto';
-      el.style.opacity = '0.12';
-      e.preventDefault();
-    }, { passive: false });
-
-    document.addEventListener('touchmove', function(e) {
-      if (!dragging) return;
-      const touch = e.touches[0];
-      el.style.left = (origLeft + touch.clientX - startX) + 'px';
-      el.style.top = (origTop + touch.clientY - startY) + 'px';
-    }, { passive: true });
-
-    document.addEventListener('touchend', function() {
-      if (!dragging) return;
-      dragging = false;
-      el.style.opacity = '0.05';
-    });
-  })();
+  });
 </script>
 </body>
 </html>
