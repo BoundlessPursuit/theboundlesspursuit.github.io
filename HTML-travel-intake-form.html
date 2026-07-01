@@ -645,7 +645,7 @@
 </div>
 
 <main class="main" id="mainForm">
-  <form id="intakeForm" novalidate>
+  <form id="intakeForm" action="https://formspree.io/f/xvzjwdko" method="POST" novalidate>
 
     <!-- Contact -->
     <div class="section" id="s0">
@@ -1111,7 +1111,25 @@
   // Submit
   document.getElementById('intakeForm').addEventListener('submit', function(e) {
     e.preventDefault();
-    document.getElementById('successOverlay').classList.add('show');
+    const form = this;
+    const data = new FormData(form);
+    data.append('_subject', 'New Travel Questionnaire — Boundless Pursuit');
+
+    fetch('https://formspree.io/f/xvzjwdko', {
+      method: 'POST',
+      body: data,
+      headers: { 'Accept': 'application/json' }
+    })
+    .then(response => {
+      if (response.ok) {
+        document.getElementById('successOverlay').classList.add('show');
+      } else {
+        alert('Something went wrong — please try again or email us at travel@theboundlesspursuit.com');
+      }
+    })
+    .catch(() => {
+      alert('Something went wrong — please try again or email us at travel@theboundlesspursuit.com');
+    });
   });
 </script>
 </body>
