@@ -1,1 +1,561 @@
-file:///C:/Users/annie/AppData/Local/Temp/1c0db295-7b0f-4803-93df-8ebdf6cde961_boundless-pursuit-website%20(1).zip.961/boundless-pursuit-site/faq.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FAQ — Boundless Pursuit</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink:        #1a1714;
+    --navy:       #1b2a4a;
+    --navy-deep:  #152038;
+    --parchment:  #f2ebe0;
+    --cream:      #f7f2e8;
+    --warm-white: #faf7f1;
+    --sand:       #d4c4a0;
+    --gold:       #c9a84c;
+    --gold-light: #e2c97e;
+    --muted:      #7a7168;
+    --rule:       #ddd5c4;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background-color: var(--cream);
+    color: var(--navy);
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 48px;
+    height: 68px;
+    background: rgba(247, 242, 232, 0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--rule);
+  }
+  .nav-brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px; font-weight: 600;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--navy); text-decoration: none;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .nav-brand .bp-mono {
+    width: 34px; height: 34px;
+    border: 1.5px solid var(--gold); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 600; color: var(--navy);
+    letter-spacing: -1px; flex-shrink: 0;
+  }
+  .nav-links {
+    display: flex; align-items: center; gap: 36px; list-style: none;
+  }
+  .nav-links a {
+    font-size: 11px; font-weight: 500; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--muted); text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--navy); }
+  .nav-links a.active { color: var(--navy); }
+  .nav-cta {
+    background: var(--navy) !important; color: var(--parchment) !important;
+    padding: 10px 22px; font-size: 10px !important; letter-spacing: 0.22em !important;
+  }
+  .nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 4px; }
+  .nav-toggle span { display: block; width: 22px; height: 1.5px; background: var(--navy); margin: 5px 0; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 50vh;
+    display: flex; align-items: center; justify-content: center;
+    text-align: center; padding: 120px 24px 80px;
+    position: relative; overflow: hidden;
+    background-color: #f0e9d8;
+    background-image:
+      radial-gradient(ellipse 220px 160px at 10% 60%, rgba(107,143,168,0.20) 0%, transparent 70%),
+      radial-gradient(ellipse 200px 120px at 75% 35%, rgba(107,143,168,0.16) 0%, transparent 70%),
+      radial-gradient(ellipse 160px 120px at 2% 98%, rgba(27,42,74,0.18) 0%, transparent 65%),
+      linear-gradient(160deg, #ede4ce 0%, #f2ead8 40%, #ede0c4 100%);
+    border-bottom: 3px solid var(--gold);
+  }
+  .hero::after {
+    content: '';
+    position: absolute; bottom: 0; left: 0; right: 0;
+    height: 80px;
+    background: linear-gradient(to bottom, transparent, var(--cream));
+    pointer-events: none;
+  }
+  .hero-svg { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+  .hero-content { position: relative; z-index: 2; max-width: 620px; }
+  .hero-brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(44px, 8vw, 78px);
+    font-weight: 600; color: var(--navy);
+    letter-spacing: 0.08em; line-height: 1;
+    text-shadow: 2px 3px 16px rgba(27,42,74,0.10);
+    opacity: 0; animation: fadeUp 0.8s 0.2s forwards;
+  }
+  .hero-rule-row {
+    display: flex; align-items: center; justify-content: center;
+    gap: 14px; margin: 18px auto 20px; max-width: 360px;
+    opacity: 0; animation: fadeUp 0.8s 0.35s forwards;
+  }
+  .hero-rule-row .line { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, var(--gold)); }
+  .hero-rule-row .line:last-child { background: linear-gradient(90deg, var(--gold), transparent); }
+  .hero-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(16px, 2.5vw, 22px);
+    font-weight: 300; font-style: italic;
+    color: var(--navy); letter-spacing: 0.04em; line-height: 1.6;
+    opacity: 0; animation: fadeUp 0.8s 0.5s forwards;
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  /* ── SHARED ── */
+  .section-inner { max-width: 860px; margin: 0 auto; padding: 0 32px; }
+  .eyebrow {
+    font-size: 10px; font-weight: 500; letter-spacing: 0.3em;
+    text-transform: uppercase; color: var(--gold); margin-bottom: 14px;
+  }
+  .display-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(30px, 4.5vw, 50px);
+    font-weight: 400; color: var(--navy); line-height: 1.15;
+  }
+  .display-heading em { font-style: italic; color: var(--gold); }
+  .section-rule {
+    width: 48px; height: 1px;
+    background: linear-gradient(90deg, var(--gold), transparent);
+    margin: 22px 0;
+  }
+  .reveal {
+    opacity: 0; transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  /* ── INTRO STRIP ── */
+  .intro-strip {
+    background: var(--navy); padding: 28px 32px; text-align: center;
+  }
+  .intro-strip p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(15px, 2.2vw, 20px);
+    font-weight: 300; font-style: italic;
+    color: var(--parchment); letter-spacing: 0.04em;
+    line-height: 1.6; max-width: 680px; margin: 0 auto;
+  }
+  .intro-strip strong { color: var(--gold-light); font-weight: 400; font-style: normal; }
+
+  /* ── FAQ SECTION ── */
+  .faq-section { padding: 80px 0 100px; background: var(--cream); }
+  .faq-header { text-align: center; margin-bottom: 64px; }
+  .faq-header .section-rule { margin: 22px auto; }
+
+  /* Category label */
+  .faq-category {
+    font-size: 9px; font-weight: 500; letter-spacing: 0.28em;
+    text-transform: uppercase; color: var(--gold);
+    margin: 56px 0 24px; padding-bottom: 10px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .faq-category:first-of-type { margin-top: 0; }
+
+  /* Accordion items */
+  .faq-item {
+    border-bottom: 1px solid var(--rule);
+    background: white;
+    margin-bottom: 2px;
+  }
+  .faq-question {
+    width: 100%; background: none; border: none;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 24px 28px; cursor: pointer;
+    text-align: left; gap: 20px;
+    transition: background 0.2s;
+  }
+  .faq-question:hover { background: rgba(201,168,76,0.04); }
+  .faq-q-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px; font-weight: 400; color: var(--navy);
+    line-height: 1.3; flex: 1;
+  }
+  .faq-icon {
+    width: 28px; height: 28px; flex-shrink: 0;
+    border: 1px solid var(--rule); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.3s;
+    color: var(--gold); font-size: 18px; line-height: 1;
+  }
+  .faq-item.open .faq-icon { background: var(--navy); border-color: var(--navy); color: var(--parchment); transform: rotate(45deg); }
+  .faq-answer {
+    max-height: 0; overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.4,0,0.2,1), padding 0.3s;
+    padding: 0 28px;
+  }
+  .faq-item.open .faq-answer { max-height: 400px; padding: 0 28px 28px; }
+  .faq-answer p {
+    font-size: 14px; font-weight: 300; line-height: 1.85;
+    color: #3d3628;
+  }
+  .faq-answer p + p { margin-top: 12px; }
+
+  /* ── STILL HAVE QUESTIONS ── */
+  .still-questions {
+    padding: 80px 0;
+    background: var(--warm-white);
+    text-align: center;
+  }
+  .still-questions .section-rule { margin: 22px auto; }
+  .still-questions p {
+    font-size: 15px; font-weight: 300; line-height: 1.8;
+    color: var(--muted); max-width: 480px; margin: 0 auto 36px;
+  }
+  .btn-primary {
+    display: inline-block; padding: 16px 44px;
+    background: var(--navy); color: var(--parchment);
+    font-family: 'Jost', sans-serif; font-size: 10px; font-weight: 500;
+    letter-spacing: 0.26em; text-transform: uppercase;
+    text-decoration: none; border: 2px solid var(--navy);
+    transition: all 0.25s; margin: 0 8px;
+  }
+  .btn-primary:hover { background: var(--navy-deep); }
+  .btn-ghost {
+    display: inline-block; padding: 16px 44px;
+    background: transparent; color: var(--navy);
+    font-family: 'Jost', sans-serif; font-size: 10px; font-weight: 500;
+    letter-spacing: 0.26em; text-transform: uppercase;
+    text-decoration: none; border: 1.5px solid var(--sand);
+    transition: all 0.25s; margin: 0 8px;
+  }
+  .btn-ghost:hover { border-color: var(--gold); }
+
+  /* ── FOOTER ── */
+  footer { background: var(--navy); padding: 56px 0 32px; border-top: 1px solid rgba(255,255,255,0.06); }
+  .footer-inner { max-width: 960px; margin: 0 auto; padding: 0 32px; }
+  .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 48px; }
+  .footer-brand-name { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--parchment); margin-bottom: 12px; }
+  .footer-tagline { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
+  .footer-desc { font-size: 13px; color: rgba(242,235,224,0.5); line-height: 1.75; max-width: 260px; }
+  .footer-col h5 { font-size: 9px; font-weight: 500; letter-spacing: 0.24em; text-transform: uppercase; color: var(--gold); margin-bottom: 20px; }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .footer-col ul li a { font-size: 13px; color: rgba(242,235,224,0.6); text-decoration: none; transition: color 0.2s; }
+  .footer-col ul li a:hover { color: var(--parchment); }
+  .footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 28px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+  .footer-copy { font-size: 11px; color: rgba(242,235,224,0.35); letter-spacing: 0.06em; }
+  .footer-sub-links { display: flex; gap: 24px; }
+  .footer-sub-links a { font-size: 10px; color: rgba(242,235,224,0.35); text-decoration: none; letter-spacing: 0.1em; transition: color 0.2s; }
+  .footer-sub-links a:hover { color: var(--gold); }
+
+  /* MOBILE */
+  @media (max-width: 768px) {
+    nav { padding: 0 20px; }
+    .nav-links { display: none; flex-direction: column; position: fixed; top: 68px; left: 0; right: 0; background: var(--cream); padding: 24px; border-bottom: 1px solid var(--rule); gap: 20px; }
+    .nav-links.open { display: flex; }
+    .nav-toggle { display: block; }
+    .footer-top { grid-template-columns: 1fr 1fr; }
+    .footer-brand-col { grid-column: span 2; }
+    .btn-primary, .btn-ghost { display: block; margin: 8px auto; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <a href="index.html" class="nav-brand">
+    <span class="bp-mono">BP</span>
+    Boundless Pursuit
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="index.html#vision">Our Vision</a></li>
+    <li><a href="index.html#services">Services</a></li>
+    <li><a href="index.html#destinations">Destinations</a></li>
+    <li><a href="our-story.html">Meet Us</a></li>
+    <li><a href="faq.html" class="active">FAQ</a></li>
+    <li><a href="index.html#contact">Contact</a></li>
+    <li><a href="HTML-travel-intake-form.html" class="nav-cta">Plan My Trip</a></li>
+  </ul>
+  <button class="nav-toggle" id="navToggle" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <svg class="hero-svg" viewBox="0 0 1200 500" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <filter id="wc" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="16"/></filter>
+    </defs>
+    <ellipse cx="130" cy="200" rx="110" ry="85" fill="#7fa8bf" opacity="0.16" filter="url(#wc)"/>
+    <ellipse cx="820" cy="180" rx="160" ry="90" fill="#7fa8bf" opacity="0.14" filter="url(#wc)"/>
+    <ellipse cx="36" cy="460" rx="100" ry="60" fill="#1b2a4a" opacity="0.14" filter="url(#wc)"/>
+    <path d="M 100 420 Q 320 260 580 280 Q 820 298 1100 140" fill="none" stroke="#c9a84c" stroke-width="2" opacity="0.5"/>
+    <g transform="translate(1103,137) rotate(-28)">
+      <ellipse cx="0" cy="0" rx="3" ry="11" fill="#c9a84c" opacity="0.9"/>
+      <polygon points="0,-2 15,7 13,9 0,4 -13,9 -15,7" fill="#c9a84c" opacity="0.9"/>
+      <polygon points="0,7 7,13 6,14.5 0,11 -6,14.5 -7,13" fill="#c9a84c" opacity="0.85"/>
+    </g>
+    <path d="M 60 300 Q 300 180 560 240 Q 780 290 1050 180" fill="none" stroke="#1b2a4a" stroke-width="0.9" stroke-dasharray="7,6" opacity="0.10"/>
+    <circle cx="55" cy="440" r="2.5" fill="#c9a84c" opacity="0.4"/>
+    <circle cx="72" cy="458" r="1.8" fill="#c9a84c" opacity="0.3"/>
+    <line x1="55" y1="440" x2="72" y2="458" stroke="#c9a84c" stroke-width="0.5" opacity="0.22"/>
+  </svg>
+  <div class="hero-content">
+    <h1 class="hero-brand">FAQ</h1>
+    <div class="hero-rule-row">
+      <span class="line"></span>
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><polygon points="8,0 9.5,6.5 16,8 9.5,9.5 8,16 6.5,9.5 0,8 6.5,6.5" fill="#c9a84c" opacity="0.85"/></svg>
+      <span class="line"></span>
+    </div>
+    <p class="hero-sub">Everything you'd like to know before we begin planning together.</p>
+  </div>
+</section>
+
+<!-- ── INTRO STRIP ── -->
+<div class="intro-strip">
+  <p>"We believe the best partnerships start with <strong>clarity and trust</strong>. These are the questions we hear most — answered honestly."</p>
+</div>
+
+<!-- ── FAQ SECTION ── -->
+<section class="faq-section">
+  <div class="section-inner">
+
+    <div class="faq-header reveal">
+      <p class="eyebrow">Common Questions</p>
+      <h2 class="display-heading">You asked. <em>We answered.</em></h2>
+      <div class="section-rule"></div>
+    </div>
+
+    <!-- CATEGORY: WORKING WITH US -->
+    <p class="faq-category reveal">Working With Us</p>
+
+    <div class="faq-item reveal">
+      <button class="faq-question" aria-expanded="false">
+        <span class="faq-q-text">How does working with a travel consultant work?</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">
+        <p>Working with Boundless Pursuit is a collaborative experience from start to finish. It begins with a conversation — either through our travel questionnaire or a direct message — where we get to know you, your travel style, your wishlist, and your budget.</p>
+        <p>From there, we take care of the research, planning, and booking so you don't have to. We handle the details, coordinate with hotels and suppliers, and stay in touch throughout your trip. Think of us as your personal travel partner — someone in your corner who genuinely cares about how the experience unfolds.</p>
+      </div>
+    </div>
+
+    <div class="faq-item reveal">
+      <button class="faq-question" aria-expanded="false">
+        <span class="faq-q-text">What makes you different from booking online?</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">
+        <p>Online booking platforms are built for convenience — not for connection. They can't listen to your preferences, anticipate your needs, or advocate for you when something goes wrong.</p>
+        <p>We bring a human touch that no algorithm can replicate. As Virtuoso-affiliated advisors, we also have access to exclusive hotel benefits, preferred rates, room upgrades, and resort credits that are simply not available when you book direct or through an online travel agency. You often get more value working with us than booking on your own.</p>
+      </div>
+    </div>
+
+    <div class="faq-item reveal">
+      <button class="faq-question" aria-expanded="false">
+        <span class="faq-q-text">Is there a fee to work with Boundless Pursuit?</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">
+        <p>We earn a commission through our preferred hotel and supplier partnerships. For more complex itineraries — such as multi-destination trips, group travel, or highly detailed custom planning — a modest planning fee may apply.</p>
+        <p>We are always upfront about this before any work begins, so there are never any surprises. Our goal is a partnership built on transparency and trust from the very first conversation.</p>
+      </div>
+    </div>
+
+    <div class="faq-item reveal">
+      <button class="faq-question" aria-expanded="false">
+        <span class="faq-q-text">How do I get started?</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">
+        <p>Simply complete our travel questionnaire or send us a message directly at travel@theboundlesspursuit.com. We will follow up within 48 hours to begin the conversation.</p>
+        <p>There is no obligation to book — we are happy to answer questions and explore ideas before any commitment is made.</p>
+      </div>
+    </div>
+
+    <!-- CATEGORY: PLANNING -->
+    <p class="faq-category reveal">Planning Your Trip</p>
+
+    <div class="faq-item reveal">
+      <button class="faq-question" aria-expanded="false">
+        <span class="faq-q-text">How far in advance should I start planning?</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">
+        <p>For most international trips, we recommend reaching out at least three to six months in advance. Popular destinations and luxury properties book quickly, and the earlier we begin, the more options we have available to you.</p>
+        <p>We understand life doesn't always allow for that kind of lead time. If you have a shorter timeline, reach out anyway — we will do everything we can to put together a wonderful experience.</p>
+      </div>
+    </div>
+
+    <div class="faq-item reveal">
+      <button class="faq-question" aria-expanded="false">
+        <span class="faq-q-text">What if I already have a destination in mind?</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">
+        <p>That is a wonderful starting point. If you know where you want to go, we can focus our energy on making that destination come to life in the most meaningful way possible — from the right accommodations to the experiences that will make it unforgettable.</p>
+        <p>If you are open to suggestions, we love that too. Sometimes the best trips are the ones you never expected to take.</p>
+      </div>
+    </div>
+
+    <div class="faq-item reveal">
+      <button class="faq-question" aria-expanded="false">
+        <span class="faq-q-text">Can you help with flights and not just hotels?</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">
+        <p>Yes. We can assist with flights, business class upgrades, seat preferences, airline loyalty programs, and overall routing to make your journey as smooth as possible. We also love helping clients maximize their premium travel credit cards — whether that is Chase Sapphire Reserve, Venture X, Amex, or others — to get the most value out of every trip.</p>
+      </div>
+    </div>
+
+    <div class="faq-item reveal">
+      <button class="faq-question" aria-expanded="false">
+        <span class="faq-q-text">Do you handle travel insurance?</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">
+        <p>Yes. We strongly recommend travel insurance for all trips and are happy to walk you through coverage options that make sense for your itinerary and budget. Travel insurance provides important protection for trip cancellations, medical emergencies, and unexpected disruptions — and gives you real peace of mind while you are away.</p>
+      </div>
+    </div>
+
+    <!-- CATEGORY: VIRTUOSO -->
+    <p class="faq-category reveal">Virtuoso Membership</p>
+
+    <div class="faq-item reveal">
+      <button class="faq-question" aria-expanded="false">
+        <span class="faq-q-text">What is Virtuoso and what does it mean for my trip?</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">
+        <p>Virtuoso is an invitation-only global network of luxury travel agencies and advisors. As Virtuoso-affiliated advisors, we have preferred relationships with some of the world's finest hotels, resorts, cruise lines, and tour operators.</p>
+        <p>For you, this means access to exclusive perks that are not available when booking directly — things like complimentary room upgrades, daily breakfast for two, resort credits, early check-in and late checkout, and VIP welcome amenities. These benefits are layered into your booking at no additional cost to you.</p>
+      </div>
+    </div>
+
+    <div class="faq-item reveal">
+      <button class="faq-question" aria-expanded="false">
+        <span class="faq-q-text">What types of trips do you specialize in?</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-answer">
+        <p>We are passionate about a wide range of travel experiences — from honeymoons and anniversary trips to family adventures, winter sport getaways, cultural immersion journeys, and culinary travel. We have a particular love for active travel, great food, and destinations with rich history and diverse culture.</p>
+        <p>Whether you are looking for a sun-soaked resort, a ski chalet in the Alps, or a backroads adventure through Southeast Asia, we bring the same care and attention to every trip we plan.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── STILL HAVE QUESTIONS ── -->
+<section class="still-questions">
+  <div class="section-inner">
+    <div class="reveal">
+      <p class="eyebrow">Still Have Questions?</p>
+      <h2 class="display-heading">We are always <em>happy to help</em></h2>
+      <div class="section-rule"></div>
+      <p>There are no wrong questions when it comes to planning your dream trip. Reach out directly and we will get back to you within 48 hours.</p>
+      <div style="display:flex; justify-content:center; flex-wrap:wrap; gap:12px;">
+        <a href="index.html#contact" class="btn-primary">Let's Talk Travel</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand-col">
+        <div class="footer-brand-name">Boundless Pursuit</div>
+        <div class="footer-tagline">Explore More · Connect Deeper · Remember Forever</div>
+        <p class="footer-desc">Travel consulting for the discerning traveler. We craft meaningful journeys wherever your curiosity takes you — with care, precision, and a deep love of the world.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Navigate</h5>
+        <ul>
+          <li><a href="index.html#vision">Our Vision</a></li>
+          <li><a href="our-story.html">Meet Us</a></li>
+          <li><a href="index.html#services">Services</a></li>
+          <li><a href="index.html#destinations">Destinations</a></li>
+          <li><a href="faq.html">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Services</h5>
+        <ul>
+          <li><a href="#">Bespoke Itineraries</a></li>
+          <li><a href="#">Accommodation Curation</a></li>
+          <li><a href="#">Flight Management</a></li>
+          <li><a href="#">Excursions</a></li>
+          <li><a href="#">Special Occasions</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Contact</h5>
+        <ul>
+          <li><a href="mailto:travel@theboundlesspursuit.com">travel@theboundlesspursuit.com</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2026 Boundless Pursuit. All rights reserved.</span>
+      <div class="footer-sub-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Nav toggle
+  document.getElementById('navToggle').addEventListener('click', function() {
+    document.getElementById('navLinks').classList.toggle('open');
+  });
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    a.addEventListener('click', () => document.getElementById('navLinks').classList.remove('open'));
+  });
+
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // FAQ accordion
+  document.querySelectorAll('.faq-question').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const item = this.closest('.faq-item');
+      const isOpen = item.classList.contains('open');
+      // Close all
+      document.querySelectorAll('.faq-item').forEach(i => {
+        i.classList.remove('open');
+        i.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+      });
+      // Open clicked if it was closed
+      if (!isOpen) {
+        item.classList.add('open');
+        this.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
+</script>
+</body>
+</html>
