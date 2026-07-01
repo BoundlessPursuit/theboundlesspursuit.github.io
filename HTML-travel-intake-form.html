@@ -1,0 +1,1109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pursuit Questionnaire — Travel Intake</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1714;
+    --navy: #1b2a4a;
+    --parchment: #f2ebe0;
+    --cream: #f7f2e8;
+    --sand: #d4c4a0;
+    --gold: #c9a84c;
+    --gold-light: #e2c97e;
+    --muted: #7a7168;
+    --rule: #ddd5c4;
+    --map-blue: #6b8fa8;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background-color: var(--cream);
+    background-image:
+      /* Faint world map watermark via SVG continents */
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='800' viewBox='0 0 1200 800'%3E%3Cellipse cx='200' cy='320' rx='180' ry='130' fill='%236b8fa8' opacity='0.07'/%3E%3Cellipse cx='160' cy='480' rx='120' ry='80' fill='%236b8fa8' opacity='0.05'/%3E%3Cellipse cx='500' cy='280' rx='200' ry='100' fill='%236b8fa8' opacity='0.06'/%3E%3Cellipse cx='480' cy='420' rx='80' ry='60' fill='%236b8fa8' opacity='0.04'/%3E%3Cellipse cx='750' cy='260' rx='220' ry='110' fill='%236b8fa8' opacity='0.06'/%3E%3Cellipse cx='850' cy='380' rx='140' ry='100' fill='%236b8fa8' opacity='0.05'/%3E%3Cellipse cx='700' cy='480' rx='60' ry='50' fill='%236b8fa8' opacity='0.04'/%3E%3Cellipse cx='1050' cy='320' rx='100' ry='80' fill='%236b8fa8' opacity='0.05'/%3E%3Cellipse cx='980' cy='450' rx='80' ry='60' fill='%236b8fa8' opacity='0.04'/%3E%3C/svg%3E"),
+      /* Noise/paper texture */
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    background-size: 100% auto, 300px 300px;
+    background-repeat: no-repeat, repeat;
+    background-position: center 200px, 0 0;
+    color: var(--navy);
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+    padding: 0;
+  }
+
+  /* Decorative top band */
+  .top-band { display: none; }
+  .gold-band { display: none; }
+
+  /* ── HEADER: Business Card Replica ── */
+  .header {
+    background-color: #f0e9d8;
+    background-image:
+      /* Watercolor continent blobs — left Americas */
+      radial-gradient(ellipse 220px 160px at 12% 55%, rgba(107,143,168,0.28) 0%, transparent 70%),
+      radial-gradient(ellipse 120px 90px at 8% 78%, rgba(107,143,168,0.18) 0%, transparent 70%),
+      radial-gradient(ellipse 80px 60px at 18% 85%, rgba(107,143,168,0.12) 0%, transparent 70%),
+      /* bottom-left dark ink blot */
+      radial-gradient(ellipse 160px 120px at 2% 98%, rgba(27,42,74,0.22) 0%, transparent 65%),
+      /* Europe/Africa */
+      radial-gradient(ellipse 160px 100px at 42% 40%, rgba(107,143,168,0.20) 0%, transparent 70%),
+      radial-gradient(ellipse 90px 120px at 44% 62%, rgba(107,143,168,0.15) 0%, transparent 70%),
+      /* Asia */
+      radial-gradient(ellipse 240px 120px at 72% 38%, rgba(107,143,168,0.22) 0%, transparent 70%),
+      radial-gradient(ellipse 100px 80px at 78% 58%, rgba(107,143,168,0.16) 0%, transparent 70%),
+      /* Australia */
+      radial-gradient(ellipse 70px 50px at 88% 68%, rgba(107,143,168,0.14) 0%, transparent 70%),
+      /* warm parchment base */
+      linear-gradient(160deg, #ede4ce 0%, #f2ead8 40%, #ede0c4 100%);
+    padding: 0;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 3px solid var(--gold);
+  }
+
+  /* SVG canvas for compass, monogram, plane trail, stamp */
+  .header-svg-layer {
+    position: absolute;
+    inset: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+  }
+
+  /* Header content sits above SVG */
+  .header-content {
+    position: relative;
+    z-index: 2;
+    padding: 44px 40px 40px;
+  }
+
+  .header-eyebrow { display: none; }
+
+  /* BOUNDLESS PURSUIT large serif title */
+  .header-brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(32px, 7vw, 64px);
+    font-weight: 600;
+    color: var(--navy);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    line-height: 1;
+    margin-top: 16px;
+    text-shadow: 1px 2px 8px rgba(27,42,74,0.10);
+  }
+
+  /* gold rule + star below brand */
+  .header-brand-rule {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin: 12px auto 10px;
+    max-width: 500px;
+  }
+  .header-brand-rule span {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold));
+  }
+  .header-brand-rule span:last-child {
+    background: linear-gradient(90deg, var(--gold), transparent);
+  }
+  .header-brand-rule .star {
+    flex: none;
+    color: var(--gold);
+    font-size: 16px;
+    line-height: 1;
+  }
+
+  .header-title { display: none; }
+  .header-monogram { display: none; }
+  .header-tagline { display: none; }
+
+  .header-sub {
+    margin-top: 12px;
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--navy);
+    letter-spacing: 0.06em;
+    max-width: 520px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.7;
+    position: relative;
+    z-index: 2;
+    opacity: 1;
+  }
+  .header-rule { display: none; }
+
+  /* Progress bar */
+  .progress-wrap {
+    background: var(--parchment);
+    border-bottom: 1px solid var(--rule);
+    padding: 14px 40px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .progress-label {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+  .progress-bar {
+    flex: 1;
+    height: 2px;
+    background: var(--rule);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold), var(--gold-light));
+    width: 0%;
+    transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
+    border-radius: 2px;
+  }
+  .progress-pct {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--gold);
+    min-width: 36px;
+    text-align: right;
+  }
+
+  /* Main layout */
+  .main {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 60px 24px 100px;
+    position: relative;
+  }
+  /* Faint compass rose watermark centered in form body */
+  .main::before {
+    content: '';
+    position: fixed;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px; height: 500px;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Ccircle cx='100' cy='100' r='90' fill='none' stroke='%231b2a4a' stroke-width='0.4' opacity='1'/%3E%3Ccircle cx='100' cy='100' r='70' fill='none' stroke='%231b2a4a' stroke-width='0.3' opacity='1'/%3E%3Ccircle cx='100' cy='100' r='50' fill='none' stroke='%231b2a4a' stroke-width='0.2' opacity='1'/%3E%3Cline x1='100' y1='5' x2='100' y2='195' stroke='%231b2a4a' stroke-width='0.3' opacity='1'/%3E%3Cline x1='5' y1='100' x2='195' y2='100' stroke='%231b2a4a' stroke-width='0.3' opacity='1'/%3E%3Cline x1='26' y1='26' x2='174' y2='174' stroke='%231b2a4a' stroke-width='0.2' opacity='1'/%3E%3Cline x1='174' y1='26' x2='26' y2='174' stroke='%231b2a4a' stroke-width='0.2' opacity='1'/%3E%3Cpolygon points='100,10 105,92 100,80 95,92' fill='%23c9a84c' opacity='1'/%3E%3Cpolygon points='100,190 105,108 100,120 95,108' fill='%231b2a4a' opacity='0.8'/%3E%3Cpolygon points='10,100 92,95 80,100 92,105' fill='%231b2a4a' opacity='0.8'/%3E%3Cpolygon points='190,100 108,95 120,100 108,105' fill='%231b2a4a' opacity='0.8'/%3E%3Ccircle cx='100' cy='100' r='4' fill='none' stroke='%23c9a84c' stroke-width='1' opacity='1'/%3E%3Ccircle cx='100' cy='100' r='1.5' fill='%23c9a84c' opacity='1'/%3E%3Ctext x='100' y='22' text-anchor='middle' font-size='9' fill='%231b2a4a' opacity='1' font-family='serif' font-weight='bold'%3EN%3C/text%3E%3Ctext x='100' y='184' text-anchor='middle' font-size='7' fill='%231b2a4a' opacity='0.8' font-family='serif'%3ES%3C/text%3E%3Ctext x='18' y='104' text-anchor='middle' font-size='7' fill='%231b2a4a' opacity='0.8' font-family='serif'%3EW%3C/text%3E%3Ctext x='182' y='104' text-anchor='middle' font-size='7' fill='%231b2a4a' opacity='0.8' font-family='serif'%3EE%3C/text%3E%3C/svg%3E") center/contain no-repeat;
+    opacity: 0.04;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Section */
+  .section {
+    margin-bottom: 56px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  .section.visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+  .section-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--gold);
+    letter-spacing: 0.1em;
+    flex-shrink: 0;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    font-weight: 400;
+    color: var(--navy);
+    line-height: 1.2;
+  }
+  .section-title em { font-style: italic; color: var(--gold); }
+  .section-rule {
+    flex: 1;
+    height: 1px;
+    background: var(--rule);
+    margin-left: 8px;
+    align-self: center;
+  }
+  .section-hint {
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+    margin-bottom: 20px;
+    margin-top: -16px;
+    padding-left: 0;
+  }
+
+  /* Field group */
+  .field-group {
+    margin-bottom: 24px;
+  }
+  .field-label {
+    display: block;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+  .field-label span {
+    color: var(--gold);
+    font-size: 14px;
+    vertical-align: middle;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="number"],
+  input[type="date"],
+  select,
+  textarea {
+    width: 100%;
+    background: white;
+    border: 1px solid var(--rule);
+    border-bottom: 2px solid var(--sand);
+    border-radius: 0;
+    padding: 14px 16px;
+    font-family: 'Jost', sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--ink);
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    -webkit-appearance: none;
+  }
+  input:focus, select:focus, textarea:focus {
+    border-color: var(--gold);
+    border-bottom-color: var(--navy);
+    box-shadow: 0 4px 12px rgba(27,42,74,0.08);
+  }
+  textarea { resize: vertical; min-height: 100px; line-height: 1.6; }
+  select { cursor: pointer; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%231b2a4a' stroke-width='1.5' fill='none'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 16px center; padding-right: 40px; }
+
+  /* Grid */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  @media (max-width: 600px) {
+    .grid-2, .grid-3 { grid-template-columns: 1fr; }
+  }
+
+  /* Pill choices */
+  .pill-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .pill-option {
+    position: relative;
+  }
+  .pill-option input[type="checkbox"],
+  .pill-option input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    width: 0; height: 0;
+  }
+  .pill-label {
+    display: inline-block;
+    padding: 9px 18px;
+    border: 1px solid var(--rule);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    transition: all 0.18s;
+    color: var(--muted);
+    background: rgba(255,255,255,0.8);
+    user-select: none;
+  }
+  .pill-label:hover { border-color: var(--gold); color: var(--navy); }
+  .pill-option input:checked + .pill-label {
+    background: var(--navy);
+    color: var(--parchment);
+    border-color: var(--navy);
+  }
+
+  /* Range slider */
+  .range-wrap { position: relative; padding: 8px 0 4px; }
+  .range-labels { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); margin-top: 8px; letter-spacing: 0.05em; }
+  .range-value { text-align: center; font-family: 'Cormorant Garamond', serif; font-size: 22px; color: var(--navy); margin-bottom: 8px; }
+  input[type="range"] {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 2px;
+    background: var(--rule);
+    border: none;
+    border-radius: 2px;
+    outline: none;
+    padding: 0;
+  }
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    background: var(--navy);
+    border: 3px solid var(--gold);
+    cursor: pointer;
+    transition: transform 0.15s;
+  }
+  input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.15); }
+  input[type="range"]::-moz-range-thumb { width: 20px; height: 20px; border-radius: 50%; background: var(--navy); border: 3px solid var(--gold); cursor: pointer; }
+
+  /* Star rating */
+  .star-rating { display: flex; gap: 6px; flex-direction: row-reverse; justify-content: flex-end; }
+  .star-rating input { display: none; }
+  .star-rating label {
+    font-size: 28px;
+    cursor: pointer;
+    color: var(--rule);
+    transition: color 0.15s;
+  }
+  .star-rating label:hover,
+  .star-rating label:hover ~ label,
+  .star-rating input:checked ~ label { color: var(--gold); }
+
+  /* Divider */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--rule);
+    margin: 40px 0;
+  }
+
+  /* Submit */
+  .submit-area {
+    text-align: center;
+    padding: 40px 0 0;
+  }
+  .submit-note {
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    margin-bottom: 28px;
+  }
+  .btn-submit {
+    display: inline-block;
+    padding: 18px 60px;
+    background: var(--navy);
+    color: var(--parchment);
+    font-family: 'Jost', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.25s;
+  }
+  .btn-submit::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 100%; height: 3px;
+    background: linear-gradient(90deg, var(--gold), var(--gold-light), var(--gold));
+    transform: scaleX(0);
+    transition: transform 0.3s;
+  }
+  .btn-submit:hover { background: #243558; }
+  .btn-submit:hover::after { transform: scaleX(1); }
+  .btn-submit:active { transform: scale(0.98); }
+
+  /* Success */
+  .success-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(27,42,74,0.88);
+    z-index: 999;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(4px);
+  }
+  .success-overlay.show { display: flex; }
+  .success-card {
+    background: var(--cream);
+    padding: 60px 50px;
+    max-width: 460px;
+    width: 90%;
+    text-align: center;
+    animation: fadeUp 0.4s ease;
+    border-top: 3px solid var(--gold);
+  }
+  @keyframes fadeUp { from { opacity:0; transform: translateY(30px); } to { opacity:1; transform: none; } }
+  .success-icon {
+    font-size: 36px;
+    margin-bottom: 16px;
+    color: var(--gold);
+  }
+  .success-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 34px;
+    font-weight: 300;
+    color: var(--navy);
+    margin-bottom: 14px;
+  }
+  .success-msg {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.7;
+    letter-spacing: 0.04em;
+  }
+  .success-rule { width: 40px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin: 20px auto; }
+
+  /* Footer tagline below submit */
+  .footer-tagline {
+    margin-top: 24px;
+    font-family: 'Jost', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    opacity: 0.85;
+  }
+
+  /* Responsive */
+  @media (max-width: 600px) {
+    .header { padding: 40px 24px 36px; }
+    .progress-wrap { padding: 12px 20px; }
+    .main { padding: 40px 20px 80px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+
+  <!-- SVG layer: watercolor geography, compass rose, BP monogram, plane trail, stamp, dashed routes -->
+  <svg class="header-svg-layer" viewBox="0 0 1000 340" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <!-- Watercolor blur filter -->
+      <filter id="wc" x="-30%" y="-30%" width="160%" height="160%">
+        <feGaussianBlur stdDeviation="10"/>
+      </filter>
+      <filter id="wc2" x="-30%" y="-30%" width="160%" height="160%">
+        <feGaussianBlur stdDeviation="16"/>
+      </filter>
+      <filter id="wc3" x="-20%" y="-20%" width="140%" height="140%">
+        <feGaussianBlur stdDeviation="7"/>
+      </filter>
+    </defs>
+
+    <!-- ── WATERCOLOR GEOGRAPHY ── -->
+    <!-- North America — left side -->
+    <ellipse cx="115" cy="140" rx="95" ry="75" fill="#7fa8bf" opacity="0.22" filter="url(#wc2)"/>
+    <ellipse cx="95" cy="175" rx="70" ry="50" fill="#6b8fa8" opacity="0.18" filter="url(#wc)"/>
+    <ellipse cx="130" cy="200" rx="55" ry="38" fill="#8aabbd" opacity="0.15" filter="url(#wc)"/>
+    <!-- Central America nub -->
+    <ellipse cx="148" cy="230" rx="22" ry="18" fill="#6b8fa8" opacity="0.14" filter="url(#wc3)"/>
+    <!-- South America -->
+    <ellipse cx="185" cy="280" rx="55" ry="50" fill="#7fa8bf" opacity="0.18" filter="url(#wc2)"/>
+    <ellipse cx="175" cy="308" rx="35" ry="25" fill="#1b2a4a" opacity="0.13" filter="url(#wc2)"/>
+
+    <!-- Europe -->
+    <ellipse cx="420" cy="105" rx="60" ry="42" fill="#6b8fa8" opacity="0.18" filter="url(#wc)"/>
+    <!-- Africa -->
+    <ellipse cx="435" cy="200" rx="52" ry="72" fill="#7fa8bf" opacity="0.16" filter="url(#wc2)"/>
+    <ellipse cx="438" cy="255" rx="38" ry="40" fill="#6b8fa8" opacity="0.12" filter="url(#wc)"/>
+
+    <!-- Asia — large mass right of center -->
+    <ellipse cx="680" cy="115" rx="145" ry="80" fill="#7fa8bf" opacity="0.20" filter="url(#wc2)"/>
+    <ellipse cx="720" cy="170" rx="100" ry="60" fill="#6b8fa8" opacity="0.16" filter="url(#wc)"/>
+    <ellipse cx="640" cy="160" rx="65" ry="45" fill="#8aabbd" opacity="0.14" filter="url(#wc)"/>
+    <!-- Southeast Asia islands -->
+    <ellipse cx="790" cy="210" rx="40" ry="28" fill="#6b8fa8" opacity="0.14" filter="url(#wc3)"/>
+    <ellipse cx="820" cy="230" rx="22" ry="16" fill="#7fa8bf" opacity="0.12" filter="url(#wc3)"/>
+
+    <!-- Australia -->
+    <ellipse cx="850" cy="260" rx="52" ry="38" fill="#7fa8bf" opacity="0.17" filter="url(#wc)"/>
+    <ellipse cx="870" cy="280" rx="30" ry="20" fill="#6b8fa8" opacity="0.12" filter="url(#wc3)"/>
+
+    <!-- Bottom-left dark ink blot (matching business card) -->
+    <ellipse cx="30" cy="318" rx="90" ry="55" fill="#1b2a4a" opacity="0.20" filter="url(#wc2)"/>
+    <ellipse cx="55" cy="330" rx="50" ry="30" fill="#243558" opacity="0.15" filter="url(#wc)"/>
+    <!-- Gold constellation dots bottom-left -->
+    <circle cx="48" cy="295" r="2" fill="#c9a84c" opacity="0.5"/>
+    <circle cx="62" cy="308" r="1.5" fill="#c9a84c" opacity="0.4"/>
+    <circle cx="35" cy="310" r="1" fill="#c9a84c" opacity="0.45"/>
+    <line x1="48" y1="295" x2="62" y2="308" stroke="#c9a84c" stroke-width="0.5" opacity="0.3"/>
+    <line x1="62" y1="308" x2="35" y2="310" stroke="#c9a84c" stroke-width="0.5" opacity="0.3"/>
+
+    <!-- Dashed flight route curves -->
+    <path d="M 60 180 Q 200 80 380 140 Q 500 180 620 100 Q 750 30 920 60" fill="none" stroke="#1b2a4a" stroke-width="1" stroke-dasharray="6,5" opacity="0.18"/>
+    <path d="M 80 260 Q 250 200 420 230 Q 560 255 700 190 Q 820 140 960 160" fill="none" stroke="#1b2a4a" stroke-width="0.8" stroke-dasharray="5,5" opacity="0.12"/>
+    <path d="M 30 120 Q 180 60 320 110 Q 450 155 600 80" fill="none" stroke="#1b2a4a" stroke-width="0.7" stroke-dasharray="4,5" opacity="0.1"/>
+
+    <!-- Plane trail swoosh (gold) -->
+    <path d="M 110 255 Q 280 160 500 170 Q 680 178 870 70" fill="none" stroke="#c9a84c" stroke-width="2" opacity="0.65"/>
+
+    <!-- Airplane icon at end of trail — larger and cleaner -->
+    <g transform="translate(872,66) rotate(-28)">
+      <!-- fuselage -->
+      <ellipse cx="0" cy="0" rx="3" ry="11" fill="#c9a84c" opacity="0.95"/>
+      <!-- main wings -->
+      <polygon points="0,-2 14,6 12,8 0,4 -12,8 -14,6" fill="#c9a84c" opacity="0.95"/>
+      <!-- tail wings -->
+      <polygon points="0,7 6,12 5,13 0,10 -5,13 -6,12" fill="#c9a84c" opacity="0.9"/>
+    </g>
+
+    <!-- Compass rose background circle (gold stroke) -->
+    <circle cx="500" cy="152" r="100" fill="none" stroke="#c9a84c" stroke-width="1.5" opacity="0.6"/>
+    <circle cx="500" cy="152" r="96" fill="rgba(240,233,216,0.45)" stroke="none"/>
+
+    <!-- Compass cardinal lines -->
+    <line x1="500" y1="52" x2="500" y2="252" stroke="#c9a84c" stroke-width="0.8" opacity="0.5"/>
+    <line x1="400" y1="152" x2="600" y2="152" stroke="#c9a84c" stroke-width="0.8" opacity="0.5"/>
+    <line x1="429" y1="81" x2="571" y2="223" stroke="#c9a84c" stroke-width="0.5" opacity="0.3"/>
+    <line x1="571" y1="81" x2="429" y2="223" stroke="#c9a84c" stroke-width="0.5" opacity="0.3"/>
+
+    <!-- Compass points (N gold, S/E/W navy) -->
+    <polygon points="500,54 505,138 500,125 495,138" fill="#c9a84c" opacity="0.9"/>
+    <polygon points="500,250 505,166 500,179 495,166" fill="#1b2a4a" opacity="0.5"/>
+    <polygon points="402,152 486,147 473,152 486,157" fill="#1b2a4a" opacity="0.5"/>
+    <polygon points="598,152 514,147 527,152 514,157" fill="#1b2a4a" opacity="0.5"/>
+
+    <!-- N S E W labels -->
+    <text x="500" y="47" text-anchor="middle" font-size="13" fill="#c9a84c" font-family="'Cormorant Garamond',serif" font-weight="600" opacity="0.9">N</text>
+    <text x="500" y="266" text-anchor="middle" font-size="11" fill="#1b2a4a" font-family="'Cormorant Garamond',serif" opacity="0.6">S</text>
+    <text x="390" y="156" text-anchor="middle" font-size="11" fill="#1b2a4a" font-family="'Cormorant Garamond',serif" opacity="0.6">W</text>
+    <text x="612" y="156" text-anchor="middle" font-size="11" fill="#1b2a4a" font-family="'Cormorant Garamond',serif" opacity="0.6">E</text>
+
+    <!-- BP Monogram inside circle — reduced size -->
+    <text x="491" y="168" text-anchor="middle" font-size="52" fill="#1b2a4a" font-family="'Cormorant Garamond',serif" font-weight="600" opacity="0.90">B</text>
+    <text x="513" y="175" text-anchor="middle" font-size="52" fill="#1b2a4a" font-family="'Cormorant Garamond',serif" font-weight="600" opacity="0.90">P</text>
+
+    <!-- Small decorative star below compass -->
+    <g transform="translate(500,268)" opacity="0.7">
+      <polygon points="0,-7 1.5,-2 7,-2 2.5,1.5 4,7 0,3.5 -4,7 -2.5,1.5 -7,-2 -1.5,-2" fill="#c9a84c"/>
+    </g>
+
+    <!-- "The World Awaits" stamp (bottom right) -->
+    <g transform="translate(820,230)" opacity="0.55">
+      <circle cx="0" cy="0" r="44" fill="none" stroke="#1b2a4a" stroke-width="1.2"/>
+      <circle cx="0" cy="0" r="38" fill="none" stroke="#1b2a4a" stroke-width="0.5"/>
+      <line x1="-35" y1="14" x2="35" y2="14" stroke="#1b2a4a" stroke-width="0.8" opacity="0.5"/>
+      <line x1="-35" y1="20" x2="35" y2="20" stroke="#1b2a4a" stroke-width="0.6" opacity="0.4"/>
+      <line x1="-30" y1="26" x2="30" y2="26" stroke="#1b2a4a" stroke-width="0.5" opacity="0.35"/>
+      <polygon points="0,-28 2,-22 8,-22 3,-18 5,-12 0,-16 -5,-12 -3,-18 -8,-22 -2,-22" fill="#1b2a4a" opacity="0.6" transform="scale(0.6) translate(0,-8)"/>
+      <text x="0" y="-18" text-anchor="middle" font-size="7.5" fill="#1b2a4a" font-family="'Jost',sans-serif" font-weight="500" letter-spacing="2">THE WORLD</text>
+      <text x="0" y="8" text-anchor="middle" font-size="7.5" fill="#1b2a4a" font-family="'Jost',sans-serif" font-weight="500" letter-spacing="2">AWAITS</text>
+    </g>
+
+  </svg>
+
+  <!-- Text content -->
+  <div class="header-content">
+    <!-- Space for compass SVG height -->
+    <div style="height:200px;"></div>
+    <!-- BOUNDLESS PURSUIT brand name -->
+    <div class="header-brand">Boundless Pursuit</div>
+    <!-- Gold rule with star -->
+    <div class="header-brand-rule">
+      <span></span>
+      <span class="star">✦</span>
+      <span></span>
+    </div>
+    <p class="header-sub">Complete your travel questionnaire so we can craft an experience tailored precisely to you.</p>
+  </div>
+
+</header>
+
+<div class="progress-wrap">
+  <span class="progress-label">Your journey</span>
+  <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  <span class="progress-pct" id="progressPct">0%</span>
+</div>
+
+<main class="main" id="mainForm">
+  <form id="intakeForm" novalidate>
+
+    <!-- Contact -->
+    <div class="section" id="s0">
+      <div class="section-header">
+        <h2 class="section-title">Contact <em>Details</em></h2>
+        <div class="section-rule"></div>
+      </div>
+      <div class="grid-2">
+        <div class="field-group">
+          <label class="field-label">First Name <span>*</span></label>
+          <input type="text" name="first_name" placeholder="Your first name" required>
+        </div>
+        <div class="field-group">
+          <label class="field-label">Last Name <span>*</span></label>
+          <input type="text" name="last_name" placeholder="Your last name" required>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="field-group">
+          <label class="field-label">Email Address <span>*</span></label>
+          <input type="email" name="email" placeholder="your@email.com" required>
+        </div>
+        <div class="field-group">
+          <label class="field-label">Phone Number</label>
+          <input type="tel" name="phone" placeholder="+1 (000) 000-0000">
+        </div>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Preferred Mode of Contact</label>
+        <div class="pill-grid">
+          <div class="pill-option"><input type="radio" name="contact_pref" id="cp1" value="email"><label class="pill-label" for="cp1">Email</label></div>
+          <div class="pill-option"><input type="radio" name="contact_pref" id="cp2" value="phone"><label class="pill-label" for="cp2">Phone Call</label></div>
+          <div class="pill-option"><input type="radio" name="contact_pref" id="cp3" value="text"><label class="pill-label" for="cp3">Text / SMS</label></div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- Destination -->
+    <div class="section" id="s1">
+      <div class="section-header">
+        <h2 class="section-title">Where Do You Want <em>to Go?</em></h2>
+        <div class="section-rule"></div>
+      </div>
+      <p class="section-hint">Be as specific or as open as you'd like — a dream destination, a region, or "surprise me."</p>
+      <div class="field-group">
+        <label class="field-label">Destination(s) or Region(s)</label>
+        <input type="text" name="destination" placeholder="e.g. Amalfi Coast, Southeast Asia, Iceland…">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Destination Flexibility</label>
+        <div class="pill-grid">
+          <div class="pill-option"><input type="radio" name="dest_flex" id="df1" value="specific"><label class="pill-label" for="df1">Specific destination in mind</label></div>
+          <div class="pill-option"><input type="radio" name="dest_flex" id="df2" value="open_region"><label class="pill-label" for="df2">Open to suggestions in a region</label></div>
+          <div class="pill-option"><input type="radio" name="dest_flex" id="df3" value="fully_open"><label class="pill-label" for="df3">Fully open — surprise me</label></div>
+        </div>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Anything to Avoid?</label>
+        <input type="text" name="avoid" placeholder="Countries, climates, or experiences you'd prefer not to encounter">
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- Travel Experience -->
+    <div class="section" id="s2">
+      <div class="section-header">
+        <h2 class="section-title">Your Travel <em>Experience</em></h2>
+        <div class="section-rule"></div>
+      </div>
+      <div class="field-group">
+        <label class="field-label">How seasoned a traveler are you?</label>
+        <div class="pill-grid">
+          <div class="pill-option"><input type="radio" name="experience" id="ex1" value="first_time"><label class="pill-label" for="ex1">First-time traveler</label></div>
+          <div class="pill-option"><input type="radio" name="experience" id="ex2" value="occasional"><label class="pill-label" for="ex2">Occasional — a few trips</label></div>
+          <div class="pill-option"><input type="radio" name="experience" id="ex3" value="regular"><label class="pill-label" for="ex3">Regular traveler</label></div>
+          <div class="pill-option"><input type="radio" name="experience" id="ex4" value="seasoned"><label class="pill-label" for="ex4">Seasoned — I travel constantly</label></div>
+        </div>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Regions you've already visited</label>
+        <textarea name="visited" placeholder="e.g. Western Europe, Caribbean, Japan — anywhere you've been before"></textarea>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Do you prefer familiar or new ground?</label>
+        <div class="pill-grid">
+          <div class="pill-option"><input type="radio" name="familiar" id="fam1" value="revisit"><label class="pill-label" for="fam1">I love returning to favorites</label></div>
+          <div class="pill-option"><input type="radio" name="familiar" id="fam2" value="mix"><label class="pill-label" for="fam2">A mix of both</label></div>
+          <div class="pill-option"><input type="radio" name="familiar" id="fam3" value="new"><label class="pill-label" for="fam3">Always somewhere new</label></div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- Travelers -->
+    <div class="section" id="s3">
+      <div class="section-header">
+        <h2 class="section-title">Who Is <em>Traveling?</em></h2>
+        <div class="section-rule"></div>
+      </div>
+      <div class="grid-3">
+        <div class="field-group">
+          <label class="field-label">Adults (18+)</label>
+          <input type="number" name="adults" min="1" max="30" placeholder="1">
+        </div>
+        <div class="field-group">
+          <label class="field-label">Children (under 18)</label>
+          <input type="number" name="children" min="0" max="20" placeholder="0">
+        </div>
+        <div class="field-group">
+          <label class="field-label">Infants (under 2)</label>
+          <input type="number" name="infants" min="0" max="10" placeholder="0">
+        </div>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Travel Group Type</label>
+        <div class="pill-grid">
+          <div class="pill-option"><input type="radio" name="group_type" id="gt1" value="solo"><label class="pill-label" for="gt1">Solo</label></div>
+          <div class="pill-option"><input type="radio" name="group_type" id="gt2" value="couple"><label class="pill-label" for="gt2">Couple</label></div>
+          <div class="pill-option"><input type="radio" name="group_type" id="gt3" value="family"><label class="pill-label" for="gt3">Family</label></div>
+          <div class="pill-option"><input type="radio" name="group_type" id="gt4" value="friends"><label class="pill-label" for="gt4">Friends Group</label></div>
+          <div class="pill-option"><input type="radio" name="group_type" id="gt5" value="corporate"><label class="pill-label" for="gt5">Corporate / Team</label></div>
+        </div>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Children's Ages (if applicable)</label>
+        <input type="text" name="children_ages" placeholder="e.g. 4, 9, 14">
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- Dates -->
+    <div class="section" id="s4">
+      <div class="section-header">
+        <h2 class="section-title">Travel <em>Dates</em></h2>
+        <div class="section-rule"></div>
+      </div>
+      <div class="grid-2">
+        <div class="field-group">
+          <label class="field-label">Earliest Departure</label>
+          <input type="date" name="date_from">
+        </div>
+        <div class="field-group">
+          <label class="field-label">Latest Return</label>
+          <input type="date" name="date_to">
+        </div>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Trip Duration (nights)</label>
+        <div class="range-wrap">
+          <div class="range-value" id="durationDisplay">7 nights</div>
+          <input type="range" name="duration" min="1" max="30" value="7" id="durationRange">
+          <div class="range-labels"><span>1 night</span><span>2 weeks</span><span>30 nights</span></div>
+        </div>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Date Flexibility</label>
+        <div class="pill-grid">
+          <div class="pill-option"><input type="radio" name="date_flex" id="dfl1" value="fixed"><label class="pill-label" for="dfl1">Fixed — exact dates only</label></div>
+          <div class="pill-option"><input type="radio" name="date_flex" id="dfl2" value="slight"><label class="pill-label" for="dfl2">±3 days flexibility</label></div>
+          <div class="pill-option"><input type="radio" name="date_flex" id="dfl3" value="flexible"><label class="pill-label" for="dfl3">Flexible within the month</label></div>
+          <div class="pill-option"><input type="radio" name="date_flex" id="dfl4" value="very_flex"><label class="pill-label" for="dfl4">Very flexible — best value wins</label></div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- Budget -->
+    <div class="section" id="s5">
+      <div class="section-header">
+        <h2 class="section-title">Budget & <em>Accommodations</em></h2>
+        <div class="section-rule"></div>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Accommodation Budget (per night, per room)</label>
+        <div class="range-wrap">
+          <div class="range-value" id="budgetDisplay">$300 / night</div>
+          <input type="range" name="budget" min="50" max="2000" step="25" value="300" id="budgetRange">
+          <div class="range-labels"><span>$50</span><span>$1,000</span><span>$2,000+</span></div>
+        </div>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Accommodation Style</label>
+        <div class="pill-grid">
+          <div class="pill-option"><input type="checkbox" name="accom_style" id="as1" value="budget_hotel"><label class="pill-label" for="as1">Budget / Hostel</label></div>
+          <div class="pill-option"><input type="checkbox" name="accom_style" id="as2" value="boutique"><label class="pill-label" for="as2">Boutique Hotel</label></div>
+          <div class="pill-option"><input type="checkbox" name="accom_style" id="as3" value="resort"><label class="pill-label" for="as3">Resort</label></div>
+          <div class="pill-option"><input type="checkbox" name="accom_style" id="as4" value="luxury"><label class="pill-label" for="as4">Luxury / 5-star</label></div>
+          <div class="pill-option"><input type="checkbox" name="accom_style" id="as5" value="villa"><label class="pill-label" for="as5">Private Villa / Rental</label></div>
+          <div class="pill-option"><input type="checkbox" name="accom_style" id="as6" value="eco"><label class="pill-label" for="as6">Eco Lodge / Glamping</label></div>
+          <div class="pill-option"><input type="checkbox" name="accom_style" id="as7" value="unique"><label class="pill-label" for="as7">Unique / Experiential</label></div>
+        </div>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Overall Trip Budget (all-in, optional)</label>
+        <input type="text" name="total_budget" placeholder="e.g. $5,000 per person or $15,000 total">
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- Class of Service -->
+    <div class="section" id="s6">
+      <div class="section-header">
+        <h2 class="section-title">Class of <em>Service</em></h2>
+        <div class="section-rule"></div>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Preferred Flight Class</label>
+        <div class="pill-grid">
+          <div class="pill-option"><input type="radio" name="flight_class" id="fc1" value="economy"><label class="pill-label" for="fc1">Economy</label></div>
+          <div class="pill-option"><input type="radio" name="flight_class" id="fc2" value="premium_eco"><label class="pill-label" for="fc2">Premium Economy</label></div>
+          <div class="pill-option"><input type="radio" name="flight_class" id="fc3" value="business"><label class="pill-label" for="fc3">Business Class</label></div>
+          <div class="pill-option"><input type="radio" name="flight_class" id="fc4" value="first"><label class="pill-label" for="fc4">First Class</label></div>
+          <div class="pill-option"><input type="radio" name="flight_class" id="fc5" value="private"><label class="pill-label" for="fc5">Private Aviation</label></div>
+        </div>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Airline Preferences or Loyalty Programs</label>
+        <input type="text" name="airline_pref" placeholder="e.g. Delta SkyMiles, American AAdvantage, no preference">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Any Seat Preferences?</label>
+        <input type="text" name="seat_pref" placeholder="e.g. window, aisle, bulk-head, extra legroom">
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- Transportation -->
+    <div class="section" id="s7">
+      <div class="section-header">
+        <h2 class="section-title">On-the-Ground <em>Transportation</em></h2>
+        <div class="section-rule"></div>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Transportation Needed</label>
+        <div class="pill-grid">
+          <div class="pill-option"><input type="checkbox" name="transport" id="tr1" value="rental_car"><label class="pill-label" for="tr1">Rental Car</label></div>
+          <div class="pill-option"><input type="checkbox" name="transport" id="tr2" value="private_driver"><label class="pill-label" for="tr2">Private Driver / Chauffeur</label></div>
+          <div class="pill-option"><input type="checkbox" name="transport" id="tr3" value="transfers"><label class="pill-label" for="tr3">Airport Transfers</label></div>
+          <div class="pill-option"><input type="checkbox" name="transport" id="tr4" value="train"><label class="pill-label" for="tr4">Train / Rail Passes</label></div>
+          <div class="pill-option"><input type="checkbox" name="transport" id="tr5" value="ferry"><label class="pill-label" for="tr5">Ferry / Water Taxi</label></div>
+          <div class="pill-option"><input type="checkbox" name="transport" id="tr6" value="helicopter"><label class="pill-label" for="tr6">Helicopter / Seaplane</label></div>
+          <div class="pill-option"><input type="checkbox" name="transport" id="tr7" value="none"><label class="pill-label" for="tr7">I'll arrange my own</label></div>
+        </div>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Notes on Transportation</label>
+        <textarea name="transport_notes" placeholder="Any specific needs — special license requirements, infant car seats, accessibility…"></textarea>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- Travel Style -->
+    <div class="section" id="s8">
+      <div class="section-header">
+        <h2 class="section-title">Your Travel <em>Style</em></h2>
+        <div class="section-rule"></div>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Travel Personality (select all that resonate)</label>
+        <div class="pill-grid">
+          <div class="pill-option"><input type="checkbox" name="style" id="st1" value="luxury"><label class="pill-label" for="st1">Luxury &amp; Indulgence</label></div>
+          <div class="pill-option"><input type="checkbox" name="style" id="st2" value="adventure"><label class="pill-label" for="st2">Adventure &amp; Outdoors</label></div>
+          <div class="pill-option"><input type="checkbox" name="style" id="st3" value="cultural"><label class="pill-label" for="st3">Cultural Immersion</label></div>
+          <div class="pill-option"><input type="checkbox" name="style" id="st4" value="relaxation"><label class="pill-label" for="st4">Rest &amp; Relaxation</label></div>
+          <div class="pill-option"><input type="checkbox" name="style" id="st5" value="foodie"><label class="pill-label" for="st5">Culinary &amp; Food-Focused</label></div>
+          <div class="pill-option"><input type="checkbox" name="style" id="st6" value="budget"><label class="pill-label" for="st6">Budget Conscious</label></div>
+          <div class="pill-option"><input type="checkbox" name="style" id="st7" value="wellness"><label class="pill-label" for="st7">Wellness &amp; Spa</label></div>
+          <div class="pill-option"><input type="checkbox" name="style" id="st8" value="nightlife"><label class="pill-label" for="st8">Nightlife &amp; Social</label></div>
+          <div class="pill-option"><input type="checkbox" name="style" id="st9" value="family"><label class="pill-label" for="st9">Family-Friendly</label></div>
+          <div class="pill-option"><input type="checkbox" name="style" id="st10" value="eco"><label class="pill-label" for="st10">Eco &amp; Sustainable</label></div>
+          <div class="pill-option"><input type="checkbox" name="style" id="st11" value="romance"><label class="pill-label" for="st11">Romantic</label></div>
+          <div class="pill-option"><input type="checkbox" name="style" id="st12" value="slow"><label class="pill-label" for="st12">Slow Travel</label></div>
+        </div>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Pace Preference</label>
+        <div class="range-wrap">
+          <div class="range-value" id="paceDisplay">Balanced</div>
+          <input type="range" name="pace" min="1" max="5" value="3" id="paceRange">
+          <div class="range-labels"><span>Slow &amp; leisurely</span><span></span><span>Action-packed</span></div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- Excursions -->
+    <div class="section" id="s9">
+      <div class="section-header">
+        <h2 class="section-title">Excursions & <em>Experiences</em></h2>
+        <div class="section-rule"></div>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Interested in Excursions?</label>
+        <div class="pill-grid">
+          <div class="pill-option"><input type="radio" name="excursions_yn" id="ey1" value="yes_plan"><label class="pill-label" for="ey1">Yes — please include them</label></div>
+          <div class="pill-option"><input type="radio" name="excursions_yn" id="ey2" value="yes_suggest"><label class="pill-label" for="ey2">Yes — suggest options</label></div>
+          <div class="pill-option"><input type="radio" name="excursions_yn" id="ey3" value="maybe"><label class="pill-label" for="ey3">Maybe — depends on what's available</label></div>
+          <div class="pill-option"><input type="radio" name="excursions_yn" id="ey4" value="no"><label class="pill-label" for="ey4">No — we prefer free time</label></div>
+        </div>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Types of Experiences (select all that interest you)</label>
+        <div class="pill-grid">
+          <div class="pill-option"><input type="checkbox" name="excursion_type" id="et1" value="hiking"><label class="pill-label" for="et1">Hiking &amp; Trekking</label></div>
+          <div class="pill-option"><input type="checkbox" name="excursion_type" id="et2" value="water"><label class="pill-label" for="et2">Water Sports &amp; Diving</label></div>
+          <div class="pill-option"><input type="checkbox" name="excursion_type" id="et3" value="wildlife"><label class="pill-label" for="et3">Wildlife &amp; Safari</label></div>
+          <div class="pill-option"><input type="checkbox" name="excursion_type" id="et4" value="cooking"><label class="pill-label" for="et4">Cooking &amp; Food Tours</label></div>
+          <div class="pill-option"><input type="checkbox" name="excursion_type" id="et5" value="history"><label class="pill-label" for="et5">History &amp; Architecture</label></div>
+          <div class="pill-option"><input type="checkbox" name="excursion_type" id="et6" value="art"><label class="pill-label" for="et6">Art &amp; Museums</label></div>
+          <div class="pill-option"><input type="checkbox" name="excursion_type" id="et7" value="extreme"><label class="pill-label" for="et7">Extreme Sports</label></div>
+          <div class="pill-option"><input type="checkbox" name="excursion_type" id="et8" value="spa"><label class="pill-label" for="et8">Spa &amp; Wellness</label></div>
+          <div class="pill-option"><input type="checkbox" name="excursion_type" id="et9" value="nightlife_exp"><label class="pill-label" for="et9">Local Nightlife</label></div>
+          <div class="pill-option"><input type="checkbox" name="excursion_type" id="et10" value="voluntourism"><label class="pill-label" for="et10">Voluntourism</label></div>
+          <div class="pill-option"><input type="checkbox" name="excursion_type" id="et11" value="photography"><label class="pill-label" for="et11">Photography Tours</label></div>
+          <div class="pill-option"><input type="checkbox" name="excursion_type" id="et12" value="cruises"><label class="pill-label" for="et12">Boat / Yacht Charters</label></div>
+        </div>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Physical Considerations or Limitations</label>
+        <textarea name="physical_limits" placeholder="e.g. moderate fitness, limited walking, no high altitude, wheelchair accessible needed, post-surgery recovery, traveling with elderly guests…"></textarea>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- Favorites / Personal -->
+    <div class="section" id="s10">
+      <div class="section-header">
+        <h2 class="section-title">What Makes a Trip <em>Unforgettable</em> for You?</h2>
+        <div class="section-rule"></div>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Your travel non-negotiables</label>
+        <textarea name="non_negotiables" placeholder="What must every great trip have for you? e.g. ocean views, private pools, local markets, incredible food, privacy, spontaneity…"></textarea>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Dietary Preferences or Food Style</label>
+        <div class="pill-grid">
+          <div class="pill-option"><input type="checkbox" name="dietary" id="di1" value="no_restriction"><label class="pill-label" for="di1">No restrictions</label></div>
+          <div class="pill-option"><input type="checkbox" name="dietary" id="di2" value="vegetarian"><label class="pill-label" for="di2">Vegetarian</label></div>
+          <div class="pill-option"><input type="checkbox" name="dietary" id="di3" value="vegan"><label class="pill-label" for="di3">Vegan</label></div>
+          <div class="pill-option"><input type="checkbox" name="dietary" id="di4" value="gluten_free"><label class="pill-label" for="di4">Gluten-free</label></div>
+          <div class="pill-option"><input type="checkbox" name="dietary" id="di5" value="halal"><label class="pill-label" for="di5">Halal</label></div>
+          <div class="pill-option"><input type="checkbox" name="dietary" id="di6" value="kosher"><label class="pill-label" for="di6">Kosher</label></div>
+          <div class="pill-option"><input type="checkbox" name="dietary" id="di7" value="allergies"><label class="pill-label" for="di7">Food allergies</label></div>
+        </div>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Special Occasions on This Trip?</label>
+        <div class="pill-grid">
+          <div class="pill-option"><input type="checkbox" name="occasion" id="oc1" value="honeymoon"><label class="pill-label" for="oc1">Honeymoon</label></div>
+          <div class="pill-option"><input type="checkbox" name="occasion" id="oc2" value="anniversary"><label class="pill-label" for="oc2">Anniversary</label></div>
+          <div class="pill-option"><input type="checkbox" name="occasion" id="oc3" value="birthday"><label class="pill-label" for="oc3">Birthday</label></div>
+          <div class="pill-option"><input type="checkbox" name="occasion" id="oc4" value="proposal"><label class="pill-label" for="oc4">Proposal</label></div>
+          <div class="pill-option"><input type="checkbox" name="occasion" id="oc5" value="graduation"><label class="pill-label" for="oc5">Graduation</label></div>
+          <div class="pill-option"><input type="checkbox" name="occasion" id="oc6" value="retirement"><label class="pill-label" for="oc6">Retirement</label></div>
+          <div class="pill-option"><input type="checkbox" name="occasion" id="oc7" value="leisure"><label class="pill-label" for="oc7">Leisure</label></div>
+        </div>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Rate Your Overall Service Expectation</label>
+        <div class="star-rating">
+          <input type="radio" name="service_rating" id="sr5" value="5"><label for="sr5">★</label>
+          <input type="radio" name="service_rating" id="sr4" value="4"><label for="sr4">★</label>
+          <input type="radio" name="service_rating" id="sr3" value="3"><label for="sr3">★</label>
+          <input type="radio" name="service_rating" id="sr2" value="2"><label for="sr2">★</label>
+          <input type="radio" name="service_rating" id="sr1" value="1"><label for="sr1">★</label>
+        </div>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Anything Else We Should Know?</label>
+        <textarea name="additional" placeholder="Share anything else — past trips you loved (or hated), a dream you want us to bring to life, or any questions for us…" style="min-height:130px;"></textarea>
+      </div>
+    </div>
+
+    <div class="submit-area">
+      <p class="submit-note">Boundless Pursuit will review your preferences within 48 hours.</p>
+      <button type="submit" class="btn-submit">Submit My Travel Questionnaire</button>
+      <p class="footer-tagline">Explore More &nbsp;·&nbsp; Connect Deeper &nbsp;·&nbsp; Remember Forever</p>
+    </div>
+
+  </form>
+</main>
+
+<!-- Success Overlay -->
+<div class="success-overlay" id="successOverlay">
+  <div class="success-card">
+    <div class="success-icon">✦</div>
+    <h2 class="success-title">Questionnaire Received</h2>
+    <div class="success-rule"></div>
+    <p class="success-msg">Thank you for sharing your travel vision. A specialist will be in touch within 24 hours to begin crafting your itinerary.</p>
+  </div>
+</div>
+
+<script>
+  // Progress tracking
+  function updateProgress() {
+    const form = document.getElementById('intakeForm');
+    const inputs = form.querySelectorAll('input:not([type="range"]), select, textarea');
+    let filled = 0;
+    inputs.forEach(inp => {
+      if (inp.type === 'checkbox' || inp.type === 'radio') {
+        if (inp.checked) filled++;
+      } else if (inp.value && inp.value.trim() !== '') {
+        filled++;
+      }
+    });
+    // Count total "answerable" items (radios count as group)
+    const radioGroups = new Set([...form.querySelectorAll('input[type="radio"]')].map(r => r.name));
+    const checkboxes = form.querySelectorAll('input[type="checkbox"]');
+    const texts = form.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"], input[type="number"], input[type="date"], select, textarea');
+    const total = radioGroups.size + checkboxes.length + texts.length;
+    let pct = Math.min(100, Math.round((filled / total) * 100));
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('progressPct').textContent = pct + '%';
+  }
+  document.getElementById('intakeForm').addEventListener('change', updateProgress);
+  document.getElementById('intakeForm').addEventListener('input', updateProgress);
+
+  // Duration slider
+  const durRange = document.getElementById('durationRange');
+  const durDisplay = document.getElementById('durationDisplay');
+  durRange.addEventListener('input', () => {
+    const v = durRange.value;
+    durDisplay.textContent = v == 1 ? '1 night' : v + ' nights';
+  });
+
+  // Budget slider
+  const budRange = document.getElementById('budgetRange');
+  const budDisplay = document.getElementById('budgetDisplay');
+  budRange.addEventListener('input', () => {
+    const v = parseInt(budRange.value);
+    budDisplay.textContent = v >= 2000 ? '$2,000+ / night' : '$' + v.toLocaleString() + ' / night';
+  });
+
+  // Pace slider
+  const paceRange = document.getElementById('paceRange');
+  const paceDisplay = document.getElementById('paceDisplay');
+  const paceLabels = ['', 'Very relaxed', 'Leisurely', 'Balanced', 'Active', 'Packed itinerary'];
+  paceRange.addEventListener('input', () => {
+    paceDisplay.textContent = paceLabels[paceRange.value];
+  });
+
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.section').forEach((s, i) => {
+    s.style.transitionDelay = (i * 0.05) + 's';
+    observer.observe(s);
+  });
+
+  // Submit
+  document.getElementById('intakeForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    document.getElementById('successOverlay').classList.add('show');
+  });
+</script>
+</body>
+</html>
